@@ -29,10 +29,6 @@
             border-radius: 5px;
             margin-bottom: 20px;
         }
-        .button-group {
-            margin: 20px 0;
-            text-align: center;
-        }
         button {
             background-color: #4CAF50;
             color: white;
@@ -52,18 +48,6 @@
         #processBtn:hover {
             background-color: #0976d2;
         }
-        #clearBtn {
-            background-color: #f44336;
-        }
-        #clearBtn:hover {
-            background-color: #da190b;
-        }
-        #debugBtn {
-            background-color: #ff9800;
-        }
-        #debugBtn:hover {
-            background-color: #e68900;
-        }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -71,34 +55,20 @@
         }
         th, td {
             border: 1px solid #ddd;
-            padding: 12px;
+            padding: 8px;
             text-align: center;
-            position: relative;
         }
         th {
             background-color: #4CAF50;
             color: white;
             font-weight: bold;
         }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
         .time-cell {
             background-color: #e8f5e9;
             font-weight: bold;
-        }
-        select {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 14px;
-            background-color: white;
-        }
-        select.selected {
-            background-color: #fff3e0;
-            font-weight: bold;
-        }
-        select.synced {
-            background-color: #e8f5e9;
-            border: 2px solid #4CAF50;
         }
         #output {
             margin-top: 20px;
@@ -110,93 +80,60 @@
             border-radius: 5px;
             margin: 20px 0;
         }
-        .legend {
-            display: flex;
-            gap: 20px;
-            margin: 15px 0;
-            padding: 10px;
-            background-color: #f5f5f5;
-            border-radius: 5px;
-        }
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        .legend-box {
-            width: 20px;
-            height: 20px;
-            border: 1px solid #ddd;
-        }
-        .selected-box {
-            background-color: #fff3e0;
-        }
-        .synced-box {
-            background-color: #e8f5e9;
-            border: 2px solid #4CAF50;
-        }
-        #debugInfo {
-            background-color: #f0f0f0;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            font-family: monospace;
+        select {
+            width: 100%;
+            padding: 5px;
             font-size: 12px;
-            display: none;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+        select option {
+            padding: 5px;
+        }
+        .sync-info {
+            background-color: #e8f5e9;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-size: 14px;
+        }
+        .conflict-warning {
+            background-color: #ffebee;
+            color: #c62828;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🕐 מערכת שעות אינטראקטיבית - גרסה מתוקנת</h1>
+        <h1>🕐 מערכת שעות אינטראקטיבית</h1>
         
         <div class="instructions">
-            <h3>הוראות שימוש:</h3>
+            <h3>📋 הוראות שימוש:</h3>
             <ol>
-                <li>לחץ על "צור מערכת" כדי ליצור טבלה עם תפריטים נפתחים</li>
-                <li>בחר שיעורים מהתפריטים - שיעורים זהים (אותו שם, מורה ווריאנט) יסומנו אוטומטית</li>
-                <li>המערכת תזהה התנגשויות ותאפשר לך לבחור אם להחליף או לשמור את הקיים</li>
-                <li>רקע כתום = נבחר ידנית | רקע ירוק = סונכרן אוטומטית</li>
-                <li>השתמש ב"נקה בחירות" כדי להתחיל מחדש</li>
-                <li>לחץ על "ייצא לאקסל" כדי להוריד את המערכת שבחרת</li>
+                <li>לחץ על "צור מערכת" כדי ליצור את טבלת המערכת</li>
+                <li>בחר שיעורים מהתפריטים הנפתחים בכל תא</li>
+                <li>שיעורים זהים יסונכרנו אוטומטית (ירוק = מסונכרן, כתום = בחירה ידנית)</li>
+                <li>המערכת תזהה התנגשויות ותאפשר לך להחליט</li>
+                <li>לחץ על "ייצא לאקסל" כדי להוריד את המערכת הסופית</li>
             </ol>
         </div>
 
-        <div class="button-group">
-            <button id="processBtn">צור מערכת</button>
-            <button id="clearBtn" style="display:none;">נקה בחירות</button>
-            <button id="exportBtn" style="display:none;">ייצא לאקסל</button>
-            <button id="debugBtn" style="display:none;">הצג מידע דיבאג</button>
+        <div>
+            <button id="processBtn" onclick="createScheduleTable()">🔄 צור מערכת</button>
+            <button onclick="exportToExcel()">📊 ייצא לאקסל</button>
+            <button onclick="clearSelections()">🗑️ נקה בחירות</button>
+            <button onclick="showDebugInfo()">🔍 הצג מידע דיבאג</button>
         </div>
 
-        <div id="debugInfo"></div>
-
-        <div class="legend" style="display:none;">
-            <div class="legend-item">
-                <div class="legend-box selected-box"></div>
-                <span>נבחר ידנית</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-box synced-box"></div>
-                <span>סונכרן אוטומטית</span>
-            </div>
-        </div>
-
-        <div id="stats" class="stats" style="display:none;">
-            <h3>סטטיסטיקות:</h3>
-            <p id="statsContent"></p>
-        </div>
-
-        <div id="output">
-            <h2>מערכת שעות - בחר שיעורים מהתפריטים:</h2>
-            <div id="tableContainer"></div>
-        </div>
+        <div id="output"></div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script>
         // נתונים מתוקנים - כל השיעורים עודכנו
-        const fullScheduleData = {
+        const rawScheduleData = {
             "08:30-09:20": { // שיעור 1
                 "א": [
                     {course: "מפגשים ג'", variant: "1", teacher: "רובי"},
@@ -430,24 +367,94 @@
             }
         };
 
+        // משתנים גלובליים
+        let processedData = [];
         let selectedCourses = {};
         let variantMap = {};
 
-        // פונקציה ליצירת וריאנטים
-        function createVariantMap() {
+        // יצירת טבלת המערכת
+        function createScheduleTable() {
+            processVariants();
+            
+            const output = document.getElementById('output');
+            output.style.display = 'block';
+            
+            let html = `
+                <div class="sync-info">
+                    <strong>🔄 סנכרון אוטומטי:</strong> 
+                    כשתבחר שיעור, כל המופעים שלו במערכת יסונכרנו אוטומטית
+                    <br>
+                    <span style="background-color: #ffe4b5; padding: 2px 5px;">כתום = בחירה ידנית</span>
+                    <span style="background-color: #90ee90; padding: 2px 5px;">ירוק = סנכרון אוטומטי</span>
+                </div>
+                <div id="stats" class="stats"></div>
+                <table id="scheduleTable">
+                    <thead>
+                        <tr>
+                            <th>שעה</th>
+                            <th>יום ראשון</th>
+                            <th>יום שני</th>
+                            <th>יום שלישי</th>
+                            <th>יום רביעי</th>
+                            <th>יום חמישי</th>
+                            <th>יום שישי</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+            
+            const days = ['א', 'ב', 'ג', 'ד', 'ה', 'ו'];
+            
+            Object.keys(rawScheduleData).forEach(time => {
+                html += `<tr>`;
+                html += `<td class="time-cell">${time}</td>`;
+                
+                days.forEach(day => {
+                    const options = rawScheduleData[time][day];
+                    
+                    if (options && options.length > 0) {
+                        html += `<td>`;
+                        html += `<select id="select_${time}_${day}" onchange="handleSelectionChange('${time}', '${day}')">`;
+                        html += `<option value="">-- בחר שיעור --</option>`;
+                        
+                        options.forEach(option => {
+                            const displayVariant = option.variant ? ` (${option.variant})` : '';
+                            const value = `${option.course}|${option.variant}|${option.teacher}`;
+                            html += `<option value="${value}">${option.course}${displayVariant} - ${option.teacher}</option>`;
+                        });
+                        
+                        html += `</select>`;
+                        html += `</td>`;
+                    } else {
+                        html += `<td>-</td>`;
+                    }
+                });
+                
+                html += `</tr>`;
+            });
+            
+            html += `</tbody></table>`;
+            output.innerHTML = html;
+            
+            updateStats();
+        }
+
+        // עיבוד וריאנטים
+        function processVariants() {
             variantMap = {};
             let variantCounter = 200;
-            let libraryCounter = 1000;
             
-            Object.keys(fullScheduleData).forEach(time => {
-                Object.keys(fullScheduleData[time]).forEach(day => {
-                    fullScheduleData[time][day].forEach(option => {
-                        const key = `${option.course}_${option.teacher}`;
+            // שלב ראשון: יצירת מפת וריאנטים לשיעורים רגילים
+            Object.keys(rawScheduleData).forEach(timeSlot => {
+                Object.values(rawScheduleData[timeSlot]).forEach(options => {
+                    options.forEach(option => {
+                        // מקרים מיוחדים שמקבלים וריאנט ייחודי כל פעם
+                        const specialCourses = ["ספרייה", "ספריה", "פרלמנט", "פרלמנט/שעה דמוקרטית", "שעת חיבורים", "שעת ועדות"];
                         
-                        // טיפול מיוחד בספרייה
-                        if (option.course === "ספרייה" || option.course === "ספריה") {
-                            option.variant = (libraryCounter++).toString();
-                        } else if (!option.variant || option.variant === "") {
+                        if (specialCourses.includes(option.course)) {
+                            option.variant = (variantCounter++).toString();
+                        } else if (!option.variant) {
+                            const key = `${option.course}_${option.teacher}`;
                             if (!variantMap[key]) {
                                 variantMap[key] = variantCounter++;
                             }
@@ -458,359 +465,295 @@
             });
         }
 
-        // פונקציה למציאת כל המיקומים של שיעור מסוים
-        function findAllCourseLocations(course, variant, teacher) {
-            const locations = [];
-            const timeSlots = Object.keys(fullScheduleData);
-            const days = ['א', 'ב', 'ג', 'ד', 'ה', 'ו'];
-            
-            timeSlots.forEach((time, timeIndex) => {
-                days.forEach((day, dayIndex) => {
-                    const options = fullScheduleData[time][day] || [];
-                    options.forEach(option => {
-                        if (option.course === course && 
-                            option.variant === variant && 
-                            option.teacher === teacher) {
-                            locations.push({
-                                time: time,
-                                day: day,
-                                timeIndex: timeIndex,
-                                dayIndex: dayIndex
-                            });
-                        }
-                    });
-                });
-            });
-            
-            return locations;
-        }
-
-        // פונקציה לבדיקת התנגשויות - מתוקנת!
-        function checkForConflicts(course, variant, teacher, currentTime, currentDay) {
-            const conflicts = [];
-            
-            Object.keys(selectedCourses).forEach(key => {
-                const [time, day] = key.split('_');
-                const selected = selectedCourses[key];
-                
-                // התנגשות: אותו מורה באותה שעה בימים שונים (רק אם המורה לא ריק)
-                if (time === currentTime && day !== currentDay && 
-                    selected.teacher === teacher && teacher !== '' && teacher !== undefined) {
-                    
-                    // וודא שזה לא אותו שיעור עם אותו וריאנט (שזה בעצם סנכרון לגיטימי)
-                    if (!(selected.course === course && selected.variant === variant)) {
-                        conflicts.push({
-                            course: selected.course,
-                            teacher: selected.teacher,
-                            time: time,
-                            day: day,
-                            type: 'teacher'
-                        });
-                    }
-                }
-            });
-            
-            return conflicts;
-        }
-
-        // פונקציה ליצירת הטבלה
-        function createScheduleTable() {
-            createVariantMap();
-            
-            let html = '<table>';
-            html += '<thead><tr>';
-            html += '<th>שעה</th>';
-            html += '<th>יום ראשון</th>';
-            html += '<th>יום שני</th>';
-            html += '<th>יום שלישי</th>';
-            html += '<th>יום רביעי</th>';
-            html += '<th>יום חמישי</th>';
-            html += '<th>יום שישי</th>';
-            html += '</tr></thead>';
-            html += '<tbody>';
-            
-            const dayMapping = {
-                'א': 0, 'ב': 1, 'ג': 2, 'ד': 3, 'ה': 4, 'ו': 5
-            };
-            
-            Object.keys(fullScheduleData).forEach((time, timeIndex) => {
-                html += '<tr>';
-                html += `<td class="time-cell">${time}</td>`;
-                
-                ['א', 'ב', 'ג', 'ד', 'ה', 'ו'].forEach(day => {
-                    const dayId = dayMapping[day];
-                    const options = fullScheduleData[time][day] || [];
-                    const cellId = `cell_${timeIndex}_${dayId}`;
-                    
-                    if (options.length === 0) {
-                        html += '<td>-</td>';
-                    } else {
-                        html += '<td>';
-                        html += `<select id="${cellId}" data-time="${time}" data-day="${day}">`;
-                        html += '<option value="">-- בחר שיעור --</option>';
-                        
-                        options.forEach(option => {
-                            const value = `${option.course}|${option.variant}|${option.teacher}`;
-                            const display = option.teacher ? 
-                                `${option.course} (${option.variant}) - ${option.teacher}` :
-                                `${option.course} (${option.variant})`;
-                            html += `<option value="${value}">${display}</option>`;
-                        });
-                        
-                        html += '</select>';
-                        html += '</td>';
-                    }
-                });
-                
-                html += '</tr>';
-            });
-            
-            html += '</tbody></table>';
-            document.getElementById('tableContainer').innerHTML = html;
-            
-            // הוסף event listeners
-            document.querySelectorAll('select').forEach(select => {
-                select.addEventListener('change', handleSelectionChange);
-            });
-        }
-
-        // פונקציה לטיפול בבחירה - גרסה פשוטה יותר
-        function handleSelectionChange(event) {
-            const select = event.target;
-            const time = select.getAttribute('data-time');
-            const day = select.getAttribute('data-day');
+        // טיפול בשינוי בחירה
+        function handleSelectionChange(time, day) {
+            const select = document.getElementById(`select_${time}_${day}`);
             const value = select.value;
-            const key = `${time}_${day}`;
             
-            // אם ביטלו בחירה
             if (!value) {
-                // מחק את הבחירה הנוכחית
-                const wasSelected = selectedCourses[key];
-                delete selectedCourses[key];
-                select.className = '';
-                
-                // אם היה שיעור שנבחר, בדוק אם צריך לנקות סנכרונים
-                if (wasSelected) {
-                    clearSyncedCourses(wasSelected.course, wasSelected.variant, wasSelected.teacher);
-                }
-                
+                // ביטול בחירה
+                delete selectedCourses[`${time}_${day}`];
+                select.style.backgroundColor = '';
+                clearAutoSyncedRelated(time, day);
                 updateStats();
                 return;
             }
             
             const [course, variant, teacher] = value.split('|');
             
-            // בדוק התנגשויות
+            // בדיקת התנגשויות
             const conflicts = checkForConflicts(course, variant, teacher, time, day);
             
             if (conflicts.length > 0) {
-                let message = `השיעור "${course}" עם ${teacher} מתנגש עם:\n\n`;
-                conflicts.forEach(conflict => {
-                    const dayNames = {
-                        'א': 'יום ראשון',
-                        'ב': 'יום שני', 
-                        'ג': 'יום שלישי',
-                        'ד': 'יום רביעי',
-                        'ה': 'יום חמישי',
-                        'ו': 'יום שישי'
-                    };
-                    message += `• ${conflict.course} עם ${conflict.teacher} ב${dayNames[conflict.day]} בשעה ${conflict.time}\n`;
-                });
-                message += `\nהאם ברצונך להחליף את השיעורים הקיימים בשיעור החדש?`;
+                const conflictMessages = conflicts.map(c => 
+                    `• ${c.course} עם ${c.teacher} ביום ${getDayName(c.day)} בשעה ${c.time}`
+                ).join('\n');
+                
+                const message = `השיעור "${course}" עם ${teacher} מתנגש עם:\n${conflictMessages}\n\nהאם ברצונך להחליף את השיעורים הקיימים בשיעור החדש?`;
                 
                 if (!confirm(message)) {
+                    // ביטול הבחירה
                     select.value = '';
                     return;
                 }
                 
-                // מחק את השיעורים המתנגשים
-                conflicts.forEach(conflict => {
-                    const conflictKey = `${conflict.time}_${conflict.day}`;
-                    const conflictSelect = document.querySelector(`select[data-time="${conflict.time}"][data-day="${conflict.day}"]`);
+                // הסרת השיעורים המתנגשים
+                conflicts.forEach(c => {
+                    const conflictKey = `${c.time}_${c.day}`;
+                    delete selectedCourses[conflictKey];
+                    const conflictSelect = document.getElementById(`select_${c.time}_${c.day}`);
                     if (conflictSelect) {
                         conflictSelect.value = '';
-                        conflictSelect.className = '';
-                        delete selectedCourses[conflictKey];
+                        conflictSelect.style.backgroundColor = '';
                     }
                 });
             }
             
-            // שמור את הבחירה
-            selectedCourses[key] = {
-                course, variant, teacher, manual: true
+            // שמירת הבחירה
+            selectedCourses[`${time}_${day}`] = {
+                course: course,
+                variant: variant,
+                teacher: teacher,
+                isAutoSynced: false
             };
-            select.className = 'selected';
             
-            // סנכרן את כל המיקומים של השיעור הזה
-            syncAllCourseLocations(course, variant, teacher, key);
+            select.style.backgroundColor = '#ffe4b5'; // כתום לבחירה ידנית
+            
+            // סנכרון שיעורים זהים
+            const synced = syncRelatedCourses(course, variant, teacher, time, day, true);
             
             updateStats();
-            showDebugInfo();
+            
+            if (synced > 0) {
+                console.log(`סונכרנו ${synced} שיעורים נוספים`);
+            }
         }
 
-        // פונקציה לסנכרון כל המיקומים של שיעור
-        function syncAllCourseLocations(course, variant, teacher, originalKey) {
-            const locations = findAllCourseLocations(course, variant, teacher);
+        // פונקציה לבדיקת התנגשויות - עם התיקונים
+        function checkForConflicts(course, variant, teacher, currentTime, currentDay) {
+            const conflicts = [];
             
-            console.log(`מסנכרן ${course} (${variant}) עם ${teacher}`);
-            console.log(`נמצאו ${locations.length} מיקומים:`, locations);
+            // מקרים מיוחדים שלא צריכים לבדוק התנגשויות
+            if (course === "ספרייה" || course === "ספריה" || course === "פרלמנט" || course === "פרלמנט/שעה דמוקרטית") {
+                return conflicts; // ספרייה ופרלמנט לא יוצרים התנגשויות
+            }
             
-            locations.forEach(loc => {
-                const locKey = `${loc.time}_${loc.day}`;
-                
-                // דלג על המיקום המקורי
-                if (locKey === originalKey) return;
-                
-                // בדוק התנגשויות
-                const conflicts = checkForConflicts(course, variant, teacher, loc.time, loc.day);
-                if (conflicts.length > 0) {
-                    console.log(`דילוג על סנכרון ב-${loc.day} ${loc.time} בגלל התנגשות`);
-                    return;
-                }
-                
-                // בצע סנכרון
-                const cellId = `cell_${loc.timeIndex}_${loc.dayIndex}`;
-                const selectElement = document.getElementById(cellId);
-                
-                if (selectElement) {
-                    const value = `${course}|${variant}|${teacher}`;
-                    selectElement.value = value;
-                    selectElement.className = 'synced';
-                    
-                    selectedCourses[locKey] = {
-                        course, variant, teacher, manual: false
-                    };
-                    
-                    console.log(`סונכרן: ${loc.day} ${loc.time}`);
-                }
-            });
-        }
-
-        // פונקציה לניקוי סנכרונים של שיעור מסוים
-        function clearSyncedCourses(course, variant, teacher) {
-            Object.keys(selectedCourses).forEach(key => {
-                const selected = selectedCourses[key];
-                if (!selected.manual && 
-                    selected.course === course && 
-                    selected.variant === variant && 
-                    selected.teacher === teacher) {
-                    
-                    const [time, day] = key.split('_');
-                    const select = document.querySelector(`select[data-time="${time}"][data-day="${day}"]`);
-                    if (select) {
-                        select.value = '';
-                        select.className = '';
-                    }
-                    delete selectedCourses[key];
-                }
-            });
-        }
-
-        // פונקציה לעדכון סטטיסטיקות
-        function updateStats() {
-            const manualCount = Object.values(selectedCourses).filter(s => s.manual).length;
-            const syncedCount = Object.values(selectedCourses).filter(s => !s.manual).length;
-            
-            let uniqueCourses = new Set();
-            Object.values(selectedCourses).forEach(course => {
-                uniqueCourses.add(`${course.course}_${course.variant}`);
-            });
-            
-            document.getElementById('statsContent').innerHTML = `
-                <strong>בחירות ידניות:</strong> ${manualCount}<br>
-                <strong>סונכרנו אוטומטית:</strong> ${syncedCount}<br>
-                <strong>סה"כ משבצות מלאות:</strong> ${manualCount + syncedCount}<br>
-                <strong>קורסים ייחודיים שנבחרו:</strong> ${uniqueCourses.size}
-            `;
-        }
-
-        // פונקציה להצגת מידע דיבאג
-        function showDebugInfo() {
-            const debugDiv = document.getElementById('debugInfo');
-            let html = '<h4>מידע דיבאג:</h4>';
-            html += '<pre>';
+            // אם אין מורה מוגדר, אין התנגשות
+            if (!teacher || teacher === '') {
+                return conflicts;
+            }
             
             Object.keys(selectedCourses).forEach(key => {
                 const [time, day] = key.split('_');
+                const selected = selectedCourses[key];
+                
+                // דלג על בדיקה עצמית
+                if (time === currentTime && day === currentDay) {
+                    return;
+                }
+                
+                // התנגשות אמיתית: אותו מורה, אותו יום, אותה שעה, קורס שונה
+                // התנגשות קורית רק כשהמורה צריך להיות בשני מקומות באותו זמן באותו יום!
+                if (time === currentTime && 
+                    day === currentDay &&  // שינוי קריטי: בדוק התנגשות רק באותו יום!
+                    selected.teacher === teacher && 
+                    selected.teacher !== '' &&
+                    (selected.course !== course || selected.variant !== variant)) {
+                    
+                    conflicts.push({
+                        course: selected.course,
+                        teacher: selected.teacher,
+                        time: time,
+                        day: day,
+                        type: 'teacher'
+                    });
+                }
+            });
+            
+            return conflicts;
+        }
+
+        // סנכרון אוטומטי של שיעורים זהים - עם התיקונים
+        function syncRelatedCourses(course, variant, teacher, currentTime, currentDay, isManual = false) {
+            let synced = 0;
+            
+            // מקרים מיוחדים שלא מסנכרנים
+            const noSyncCourses = ["ספרייה", "ספריה", "פרלמנט", "פרלמנט/שעה דמוקרטית", "שעת חיבורים", "שעת ועדות"];
+            if (noSyncCourses.includes(course)) {
+                return synced;
+            }
+            
+            Object.keys(rawScheduleData).forEach(time => {
+                Object.keys(rawScheduleData[time]).forEach(day => {
+                    // דלג על המשבצת הנוכחית
+                    if (time === currentTime && day === currentDay) {
+                        return;
+                    }
+                    
+                    const options = rawScheduleData[time][day];
+                    const matchingOption = options.find(opt => 
+                        opt.course === course && 
+                        opt.variant === variant && 
+                        opt.teacher === teacher
+                    );
+                    
+                    if (matchingOption) {
+                        const key = `${time}_${day}`;
+                        
+                        // בדוק התנגשויות רק עבור סנכרון אוטומטי
+                        if (!isManual) {
+                            // בדוק אם יש כבר בחירה אחרת במקום הזה
+                            if (selectedCourses[key] && 
+                                (selectedCourses[key].course !== course || 
+                                 selectedCourses[key].variant !== variant)) {
+                                // יש כבר שיעור אחר - לא מסנכרנים
+                                return;
+                            }
+                        }
+                        
+                        selectedCourses[key] = {
+                            course: course,
+                            variant: variant,
+                            teacher: teacher,
+                            isAutoSynced: !isManual
+                        };
+                        
+                        const select = document.getElementById(`select_${time}_${day}`);
+                        if (select) {
+                            select.value = `${course}|${variant}|${teacher}`;
+                            select.style.backgroundColor = isManual ? '#ffe4b5' : '#90ee90';
+                        }
+                        synced++;
+                    }
+                });
+            });
+            
+            return synced;
+        }
+
+        // ניקוי שיעורים מסונכרנים
+        function clearAutoSyncedRelated(time, day) {
+            const toRemove = [];
+            
+            Object.keys(selectedCourses).forEach(key => {
+                if (selectedCourses[key].isAutoSynced && key !== `${time}_${day}`) {
+                    toRemove.push(key);
+                }
+            });
+            
+            toRemove.forEach(key => {
+                delete selectedCourses[key];
+                const [t, d] = key.split('_');
+                const select = document.getElementById(`select_${t}_${d}`);
+                if (select) {
+                    select.value = '';
+                    select.style.backgroundColor = '';
+                }
+            });
+        }
+
+        // קבלת שם היום
+        function getDayName(dayLetter) {
+            const dayNames = {
+                'א': 'ראשון',
+                'ב': 'שני',
+                'ג': 'שלישי',
+                'ד': 'רביעי',
+                'ה': 'חמישי',
+                'ו': 'שישי'
+            };
+            return dayNames[dayLetter] || dayLetter;
+        }
+
+        // עדכון סטטיסטיקות
+        function updateStats() {
+            const manualSelections = Object.values(selectedCourses).filter(s => !s.isAutoSynced).length;
+            const autoSynced = Object.values(selectedCourses).filter(s => s.isAutoSynced).length;
+            const uniqueCourses = new Set(Object.values(selectedCourses).map(s => `${s.course}_${s.variant}`)).size;
+            
+            const statsDiv = document.getElementById('stats');
+            if (statsDiv) {
+                statsDiv.innerHTML = `
+                    <strong>📊 סטטיסטיקות:</strong>
+                    בחירות ידניות: ${manualSelections} | 
+                    מסונכרנים: ${autoSynced} | 
+                    סה"כ משבצות: ${Object.keys(selectedCourses).length} | 
+                    קורסים ייחודיים: ${uniqueCourses}
+                `;
+            }
+        }
+
+        // ניקוי כל הבחירות
+        function clearSelections() {
+            if (confirm('האם אתה בטוח שברצונך לנקות את כל הבחירות?')) {
+                selectedCourses = {};
+                
+                // ניקוי כל התפריטים
+                const selects = document.querySelectorAll('select[id^="select_"]');
+                selects.forEach(select => {
+                    select.value = '';
+                    select.style.backgroundColor = '';
+                });
+                
+                updateStats();
+            }
+        }
+
+        // הצגת מידע דיבאג
+        function showDebugInfo() {
+            console.log('Selected Courses:', selectedCourses);
+            console.log('Variant Map:', variantMap);
+            
+            let debugInfo = 'שיעורים נבחרים:\n';
+            Object.keys(selectedCourses).forEach(key => {
+                const [time, day] = key.split('_');
                 const course = selectedCourses[key];
-                html += `${day} ${time}: ${course.course} (${course.variant}) - ${course.teacher} [${course.manual ? 'ידני' : 'סנכרון'}]\n`;
+                debugInfo += `${getDayName(day)} ${time}: ${course.course} (${course.variant}) - ${course.teacher} [${course.isAutoSynced ? 'מסונכרן' : 'ידני'}]\n`;
             });
             
-            html += '</pre>';
-            debugDiv.innerHTML = html;
+            alert(debugInfo);
         }
 
-        // פונקציה לניקוי בחירות
-        function clearAllSelections() {
-            selectedCourses = {};
-            document.querySelectorAll('select').forEach(select => {
-                select.value = '';
-                select.className = '';
-            });
-            updateStats();
-            document.getElementById('debugInfo').innerHTML = '';
-        }
-
-        // פונקציה לייצוא לאקסל
+        // ייצוא לאקסל
         function exportToExcel() {
-            const wb = XLSX.utils.book_new();
             const data = [];
+            const days = ['א', 'ב', 'ג', 'ד', 'ה', 'ו'];
+            const dayNames = ['ראשון', 'שני', 'שלישי', 'רביעי', 'חמישי', 'שישי'];
             
-            Object.keys(fullScheduleData).forEach(time => {
-                const row = { 'שעה': time };
+            // כותרת
+            data.push(['שעה', ...dayNames]);
+            
+            // נתונים
+            Object.keys(rawScheduleData).forEach(time => {
+                const row = [time];
                 
-                const dayNames = {
-                    'א': 'יום ראשון',
-                    'ב': 'יום שני',
-                    'ג': 'יום שלישי',
-                    'ד': 'יום רביעי',
-                    'ה': 'יום חמישי',
-                    'ו': 'יום שישי'
-                };
-                
-                ['א', 'ב', 'ג', 'ד', 'ה', 'ו'].forEach(day => {
+                days.forEach(day => {
                     const key = `${time}_${day}`;
                     if (selectedCourses[key]) {
                         const course = selectedCourses[key];
-                        row[dayNames[day]] = course.teacher ? 
-                            `${course.course} (${course.variant}) - ${course.teacher}` :
-                            `${course.course} (${course.variant})`;
+                        const variant = course.variant ? ` (${course.variant})` : '';
+                        row.push(`${course.course}${variant} - ${course.teacher}`);
                     } else {
-                        row[dayNames[day]] = '';
+                        row.push('');
                     }
                 });
                 
                 data.push(row);
             });
             
-            const ws = XLSX.utils.json_to_sheet(data);
-            XLSX.utils.book_append_sheet(wb, ws, "מערכת שעות");
-            XLSX.writeFile(wb, "מערכת_שעות_נבחרת.xlsx");
+            // המרה ל-CSV
+            let csv = '\ufeff'; // BOM for Hebrew
+            data.forEach(row => {
+                csv += row.map(cell => `"${cell}"`).join(',') + '\n';
+            });
+            
+            // הורדה
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'מערכת_שעות.csv';
+            link.click();
         }
-
-        // הגדרת event listeners
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('processBtn').addEventListener('click', function() {
-                createScheduleTable();
-                document.getElementById('output').style.display = 'block';
-                document.getElementById('clearBtn').style.display = 'inline-block';
-                document.getElementById('exportBtn').style.display = 'inline-block';
-                document.getElementById('debugBtn').style.display = 'inline-block';
-                document.querySelector('.legend').style.display = 'flex';
-                document.getElementById('stats').style.display = 'block';
-                updateStats();
-            });
-            
-            document.getElementById('clearBtn').addEventListener('click', clearAllSelections);
-            document.getElementById('exportBtn').addEventListener('click', exportToExcel);
-            document.getElementById('debugBtn').addEventListener('click', function() {
-                const debugDiv = document.getElementById('debugInfo');
-                debugDiv.style.display = debugDiv.style.display === 'none' ? 'block' : 'none';
-                showDebugInfo();
-            });
-            
-            console.log("מערכת מוכנה - גרסה מתוקנת עם סנכרון משופר!");
-        });
     </script>
 </body>
 </html>
