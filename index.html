@@ -1012,10 +1012,8 @@
             const value = select.value;
             
             if (!value) {
-                // ביטול בחירה
-                delete selectedCourses[`${time}_${day}`];
-                select.style.backgroundColor = '';
-                clearAutoSyncedRelated(time, day);
+                // ביטול בחירה - מחיקה מסונכרנת
+                handleCourseDeletion(time, day);
                 updateStats();
                 return;
             }
@@ -1114,15 +1112,43 @@
             return conflicts;
         }
 
+        // פונקציה למחיקת קורס וכל המופעים המסונכרנים שלו
+        function handleCourseDeletion(time, day) {
+            const key = `${time}_${day}`;
+            const courseToDelete = selectedCourses[key];
+            
+            if (!courseToDelete) return;
+            
+            // מחק את כל המופעים של אותו קורס
+            Object.keys(selectedCourses).forEach(courseKey => {
+                const selected = selectedCourses[courseKey];
+                if (selected.course === courseToDelete.course && 
+                    selected.variant === courseToDelete.variant &&
+                    selected.teacher === courseToDelete.teacher) {
+                    delete selectedCourses[courseKey];
+                    const [t, d] = courseKey.split('_');
+                    const selectElement = document.getElementById(`select_${t}_${d}`);
+                    if (selectElement) {
+                        selectElement.value = '';
+                        selectElement.style.backgroundColor = '';
+                    }
+                }
+            });
+        }
+
         // סנכרון אוטומטי של שיעורים זהים - עם התיקונים
         function syncRelatedCourses(course, variant, teacher, currentTime, currentDay, isManual = false) {
             let synced = 0;
+            let conflicts = [];
             
             // מקרים מיוחדים שלא מסנכרנים
             const noSyncCourses = ["ספרייה", "ספריה", "פרלמנט", "פרלמנט/שעה דמוקרטית", "שעת חיבורים", "שעת ועדות"];
             if (noSyncCourses.includes(course)) {
                 return synced;
             }
+            
+            // First pass - collect all potential sync locations and check for conflicts
+            const syncTargets = [];
             
             Object.keys(rawScheduleData).forEach(time => {
                 Object.keys(rawScheduleData[time]).forEach(day => {
@@ -1141,32 +1167,57 @@
                     if (matchingOption) {
                         const key = `${time}_${day}`;
                         
-                        // בדוק התנגשויות רק עבור סנכרון אוטומטי
-                        if (!isManual) {
-                            // בדוק אם יש כבר בחירה אחרת במקום הזה
-                            if (selectedCourses[key] && 
-                                (selectedCourses[key].course !== course || 
-                                 selectedCourses[key].variant !== variant)) {
-                                // יש כבר שיעור אחר - לא מסנכרנים
-                                return;
-                            }
+                        // Check if there's already a different selection here
+                        if (selectedCourses[key] && 
+                            (selectedCourses[key].course !== course || 
+                             selectedCourses[key].variant !== variant)) {
+                            conflicts.push({
+                                time: time,
+                                day: day,
+                                existing: selectedCourses[key],
+                                key: key
+                            });
+                        } else {
+                            syncTargets.push({time, day, key});
                         }
-                        
-                        selectedCourses[key] = {
-                            course: course,
-                            variant: variant,
-                            teacher: teacher,
-                            isAutoSynced: !isManual
-                        };
-                        
-                        const select = document.getElementById(`select_${time}_${day}`);
-                        if (select) {
-                            select.value = `${course}|${variant}|${teacher}`;
-                            select.style.backgroundColor = isManual ? '#ffe4b5' : '#90ee90';
-                        }
-                        synced++;
                     }
                 });
+            });
+            
+            // If we're in manual mode and there are conflicts, ask user
+            if (isManual && conflicts.length > 0) {
+                const conflictMessages = conflicts.map(c => 
+                    `• ${c.existing.course} עם ${c.existing.teacher} ביום ${getDayName(c.day)} בשעה ${c.time}`
+                ).join('\n');
+                
+                const message = `הסנכרון של "${course}" עם ${teacher} יחליף את השיעורים הבאים:\n${conflictMessages}\n\nהאם ברצונך להחליף את כל השיעורים המתנגשים?`;
+                
+                if (confirm(message)) {
+                    // User agreed - add conflict locations to sync targets
+                    conflicts.forEach(c => {
+                        syncTargets.push({time: c.time, day: c.day, key: c.key});
+                    });
+                } else {
+                    // User declined - only sync non-conflicting slots
+                    console.log(`סנכרון חלקי - דילגנו על ${conflicts.length} התנגשויות`);
+                }
+            }
+            
+            // Now perform the actual sync
+            syncTargets.forEach(target => {
+                selectedCourses[target.key] = {
+                    course: course,
+                    variant: variant,
+                    teacher: teacher,
+                    isAutoSynced: true  // Always mark synced courses as auto-synced
+                };
+                
+                const select = document.getElementById(`select_${target.time}_${target.day}`);
+                if (select) {
+                    select.value = `${course}|${variant}|${teacher}`;
+                    select.style.backgroundColor = '#90ee90';  // Always green for synced
+                }
+                synced++;
             });
             
             return synced;
