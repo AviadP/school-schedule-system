@@ -1,0 +1,29 @@
+{
+  "name": "school-schedule-system",
+  "version": "1.0.0",
+  "description": "Interactive school schedule system for Hebrew schools",
+  "type": "module",
+  "scripts": {
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:watch": "npm test -- --watch",
+    "dev": "python3 -m http.server 8080"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
+  "jest": {
+    "transform": {},
+    "testMatch": [
+      "**/tests/**/*.test.js"
+    ],
+    "testEnvironment": "node"
+  },
+  "keywords": [
+    "school",
+    "schedule",
+    "hebrew",
+    "education"
+  ],
+  "author": "",
+  "license": "MIT"
+}
