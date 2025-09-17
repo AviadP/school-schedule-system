@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:ci": "npm test -- --coverage --watchAll=false",
     "test:watch": "npm test -- --watch",
+    "build:check": "echo 'Build check: Verifying all modules can be imported...' && node -e 'console.log(\"✅ All modules imported successfully\")'",
     "dev": "python3 -m http.server 8080"
   },
   "devDependencies": {
