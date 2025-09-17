@@ -1,0 +1,143 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, feature/* ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: Test & Quality Checks
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Full history for commit verification
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run unit tests
+      run: npm run test:ci
+
+    - name: Check for console.log in production code
+      run: |
+        echo "Checking for console.log statements in production code..."
+        # Allow console.log for debugging purposes but warn about them
+        if grep -r "console\.log" js/ --exclude-dir=node_modules; then
+          echo "⚠️  Found console.log statements in production code (consider removing for production)"
+          echo "✅ Check completed with warnings"
+        else
+          echo "✅ No console.log statements found in production code"
+        fi
+
+    - name: Validate HTML structure
+      run: |
+        echo "Validating HTML structure..."
+        if [ -f "index.html" ]; then
+          # Basic HTML validation - check for required elements
+          if grep -q "<!DOCTYPE html>" index.html && \
+             grep -q "<html" index.html && \
+             grep -q "<head>" index.html && \
+             grep -q "<body>" index.html; then
+            echo "✅ HTML structure is valid"
+          else
+            echo "❌ HTML structure is invalid"
+            exit 1
+          fi
+        else
+          echo "❌ index.html not found"
+          exit 1
+        fi
+
+    - name: Check JavaScript syntax
+      run: |
+        echo "Checking JavaScript syntax..."
+        for file in js/*.js; do
+          if [ -f "$file" ]; then
+            node -c "$file"
+            echo "✅ $file syntax is valid"
+          fi
+        done
+
+    - name: Verify build integrity
+      run: npm run build:check
+
+    - name: Check commit signature (DCO)
+      if: github.event_name == 'pull_request'
+      run: |
+        echo "Checking commit signatures..."
+        # Get commits in this PR
+        COMMITS=$(git rev-list --no-merges origin/main..HEAD)
+
+        for commit in $COMMITS; do
+          # Check if commit has proper author info
+          AUTHOR_EMAIL=$(git show -s --format='%ae' $commit)
+          AUTHOR_NAME=$(git show -s --format='%an' $commit)
+
+          echo "Checking commit $commit by $AUTHOR_NAME <$AUTHOR_EMAIL>"
+
+          # Verify author email is not placeholder
+          if [[ "$AUTHOR_EMAIL" == "EMAIL@MAIL.COM" ]] || [[ "$AUTHOR_NAME" == "NAME" ]]; then
+            echo "❌ Commit $commit has placeholder author information"
+            echo "Please configure git with: git config user.email 'your@email.com'"
+            exit 1
+          fi
+
+          echo "✅ Commit $commit has valid author information"
+        done
+
+    - name: Upload test coverage
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-report
+        path: coverage/
+        retention-days: 30
+
+  build-check:
+    name: Build Verification
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Test local server startup
+      run: |
+        echo "Testing if application can start..."
+        # Start server in background
+        timeout 10s npm run dev > server.log 2>&1 &
+        SERVER_PID=$!
+
+        # Wait a moment for server to start
+        sleep 3
+
+        # Check if server is running and serving content
+        if curl -f http://localhost:8080/ > /dev/null 2>&1; then
+          echo "✅ Application starts successfully"
+          kill $SERVER_PID 2>/dev/null || true
+        else
+          echo "❌ Application failed to start"
+          cat server.log
+          kill $SERVER_PID 2>/dev/null || true
+          exit 1
+        fi
