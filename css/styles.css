@@ -1,0 +1,124 @@
+/* School Schedule System Styles */
+
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.instructions {
+    background-color: #e3f2fd;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 10px 5px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#processBtn34, #processBtn56, #processBtn79 {
+    background-color: #2196F3;
+}
+
+#processBtn34:hover, #processBtn56:hover, #processBtn79:hover {
+    background-color: #0976d2;
+}
+
+#processBtn34.active, #processBtn56.active, #processBtn79.active {
+    background-color: #4CAF50;
+    font-weight: bold;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.time-cell {
+    background-color: #e8f5e9;
+    font-weight: bold;
+}
+
+#output {
+    margin-top: 20px;
+    display: none;
+}
+
+.stats {
+    background-color: #fff3e0;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 20px 0;
+}
+
+select {
+    width: 100%;
+    padding: 5px;
+    font-size: 12px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+}
+
+select option {
+    padding: 5px;
+}
+
+.sync-info {
+    background-color: #e8f5e9;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px 0;
+    font-size: 14px;
+}
+
+.conflict-warning {
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px 0;
+}
