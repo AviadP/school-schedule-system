@@ -18,7 +18,8 @@ import {
     escapeCsvCell,
     isSameCourseSelection,
     isSyntheticVariant,
-    SYNTHETIC_VARIANT_PREFIX
+    SYNTHETIC_VARIANT_PREFIX,
+    hasRealSection
 } from '../js/utils.js';
 
 describe('Utility Functions', () => {
@@ -364,6 +365,23 @@ describe('Utility Functions', () => {
             expect(formatCourseDisplay('שעת ועדות', '', '')).toBe('שעת ועדות');
             expect(formatCourseDisplay('שעת ועדות', SYNTHETIC_VARIANT_PREFIX + '229', ''))
                 .toBe('שעת ועדות');
+        });
+    });
+
+    describe('hasRealSection()', () => {
+        test('should accept a section number that came from the data', () => {
+            expect(hasRealSection('1')).toBe(true);
+            expect(hasRealSection('2')).toBe(true);
+        });
+
+        test('should reject app-generated variants', () => {
+            expect(hasRealSection(SYNTHETIC_VARIANT_PREFIX + '203')).toBe(false);
+        });
+
+        test('should reject a blank variant - those are separate slots, not sections', () => {
+            expect(hasRealSection('')).toBe(false);
+            expect(hasRealSection(null)).toBe(false);
+            expect(hasRealSection(undefined)).toBe(false);
         });
     });
 });

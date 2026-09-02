@@ -1,7 +1,7 @@
 // Table building and management functionality
 import { CONFIG } from './config.js';
 import { getDayName, createCourseValue, calculateStats, escapeHtml, isSameCourseSelection,
-         formatCourseDisplay, SYNTHETIC_VARIANT_PREFIX } from './utils.js';
+         formatCourseDisplay, SYNTHETIC_VARIANT_PREFIX, hasRealSection } from './utils.js';
 
 // Global variables for table state
 let selectedCourses = {};
@@ -132,11 +132,11 @@ export function handleSelectionChange(time, day, rawScheduleData) {
     const conflicts = checkForConflicts(course, variant, teacher, time, day);
     
     if (conflicts.length > 0) {
-        const conflictMessages = conflicts.map(c => 
-            `• ${c.course} עם ${c.teacher} ביום ${getDayName(c.day)} בשעה ${c.time}`
-        ).join('\\n');
-        
-        const message = `השיעור "${course}" עם ${teacher} מתנגש עם:\\n${conflictMessages}\\n\\nהאם ברצונך להחליף את השיעורים הקיימים בשיעור החדש?`;
+        const conflictMessages = conflicts.map(c =>
+            `• ${c.course} (${c.variant}) עם ${c.teacher} ב${getDayName(c.day)} בשעה ${c.time}`
+        ).join('\n');
+
+        const message = `כבר בחרת קבוצה אחרת של "${course}":\n${conflictMessages}\n\nהאם להחליף אותה בקבוצה (${variant}) עם ${teacher}?`;
         
         if (!confirm(message)) {
             // Cancel the selection
@@ -184,46 +184,39 @@ export function handleSelectionChange(time, day, rawScheduleData) {
     }
 }
 
-// Check for scheduling conflicts
+// Warn when the student already picked a DIFFERENT SECTION of the same course.
+// Only real section numbers count: courses whose variant is blank or app-generated
+// (מרחב, מפגש בוקר...) are separate slots, not alternative sections of one class.
 function checkForConflicts(course, variant, teacher, currentTime, currentDay) {
     const conflicts = [];
-    
-    // Special cases that don't need conflict checking
-    if (course === "ספרייה" || course === "ספריה" || course === "פרלמנט" || course === "פרלמנט/שעה דמוקרטית") {
-        return conflicts; // Library and parliament don't create conflicts
-    }
-    
-    // If no teacher is defined, no conflict
-    if (!teacher || teacher === '') {
+
+    if (!hasRealSection(variant)) {
         return conflicts;
     }
-    
+
     Object.keys(selectedCourses).forEach(key => {
         const [time, day] = key.split('_');
         const selected = selectedCourses[key];
-        
-        // Skip self-checking
+
         if (time === currentTime && day === currentDay) {
             return;
         }
-        
-        // Real conflict: same teacher, same day, same time, different course
-        if (time === currentTime && 
-            day === currentDay &&
-            selected.teacher === teacher && 
-            selected.teacher !== '' &&
-            (selected.course !== course || selected.variant !== variant)) {
-            
+
+        if (selected.course === course &&
+            selected.variant !== variant &&
+            hasRealSection(selected.variant)) {
+
             conflicts.push({
                 course: selected.course,
+                variant: selected.variant,
                 teacher: selected.teacher,
                 time: time,
                 day: day,
-                type: 'teacher'
+                type: 'section'
             });
         }
     });
-    
+
     return conflicts;
 }
 
@@ -300,11 +293,11 @@ function syncRelatedCourses(course, variant, teacher, currentTime, currentDay, i
     
     // If we're in manual mode and there are conflicts, ask user
     if (isManual && conflicts.length > 0) {
-        const conflictMessages = conflicts.map(c => 
-            `• ${c.existing.course} עם ${c.existing.teacher} ביום ${getDayName(c.day)} בשעה ${c.time}`
-        ).join('\\n');
-        
-        const message = `הסנכרון של "${course}" עם ${teacher} יחליף את השיעורים הבאים:\\n${conflictMessages}\\n\\nהאם ברצונך להחליף את כל השיעורים המתנגשים?`;
+        const conflictMessages = conflicts.map(c =>
+            `• ${c.existing.course} עם ${c.existing.teacher} ב${getDayName(c.day)} בשעה ${c.time}`
+        ).join('\n');
+
+        const message = `הסנכרון של "${course}" עם ${teacher} יחליף את השיעורים הבאים:\n${conflictMessages}\n\nהאם ברצונך להחליף את כל השיעורים המתנגשים?`;
         
         if (confirm(message)) {
             // User agreed - add conflict locations to sync targets
@@ -328,17 +321,23 @@ function syncRelatedCourses(course, variant, teacher, currentTime, currentDay, i
             handleCourseDeletion(target.time, target.day);
         }
         
+        // A cell the student already chose by hand keeps its manual status - syncing the
+        // same course into it must not silently demote their deliberate pick to "auto".
+        const existing = selectedCourses[target.key];
+        const stayManual = Boolean(existing && !existing.isAutoSynced &&
+            isSameCourseSelection(existing, {course, variant, teacher}));
+
         selectedCourses[target.key] = {
             course: course,
             variant: variant,
             teacher: teacher,
-            isAutoSynced: true  // Always mark synced courses as auto-synced
+            isAutoSynced: !stayManual
         };
         
         const select = document.getElementById(`select_${target.time}_${target.day}`);
         if (select) {
             select.value = `${course}|${variant}|${teacher}`;
-            select.style.backgroundColor = CONFIG.COLORS.SYNCED;  // Always green for synced
+            select.style.backgroundColor = stayManual ? CONFIG.COLORS.MANUAL : CONFIG.COLORS.SYNCED;
         }
         synced++;
     });
