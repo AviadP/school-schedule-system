@@ -1,6 +1,7 @@
 // Table building and management functionality
 import { CONFIG } from './config.js';
-import { getDayName, createCourseValue, calculateStats, escapeHtml, isSameCourseSelection } from './utils.js';
+import { getDayName, createCourseValue, calculateStats, escapeHtml, isSameCourseSelection,
+         formatCourseDisplay, SYNTHETIC_VARIANT_PREFIX } from './utils.js';
 
 // Global variables for table state
 let selectedCourses = {};
@@ -62,9 +63,8 @@ export function createScheduleTable(rawScheduleData, gradeLevel) {
                 html += `<option value="">${CONFIG.MESSAGES.NO_SELECTION}</option>`;
                 
                 options.forEach(option => {
-                    const displayVariant = option.variant ? ` (${option.variant})` : '';
                     const value = createCourseValue(option.course, option.variant, option.teacher);
-                    const label = `${option.course}${displayVariant} - ${option.teacher}`;
+                    const label = formatCourseDisplay(option.course, option.variant, option.teacher);
                     html += `<option value="${escapeHtml(value)}">${escapeHtml(label)}</option>`;
                 });
                 
@@ -97,13 +97,15 @@ function processVariants(rawScheduleData) {
                 const specialCourses = ["ספרייה", "ספריה", "פרלמנט", "פרלמנט/שעה דמוקרטית", "שעת חיבורים", "שעת ועדות"];
                 
                 if (specialCourses.includes(option.course)) {
-                    option.variant = (variantCounter++).toString();
+                    // every occurrence gets its own identity so they never sync or
+                    // delete together
+                    option.variant = SYNTHETIC_VARIANT_PREFIX + (variantCounter++);
                 } else if (!option.variant) {
                     const key = `${option.course}_${option.teacher}`;
                     if (!variantMap[key]) {
                         variantMap[key] = variantCounter++;
                     }
-                    option.variant = variantMap[key].toString();
+                    option.variant = SYNTHETIC_VARIANT_PREFIX + variantMap[key];
                 }
             });
         });

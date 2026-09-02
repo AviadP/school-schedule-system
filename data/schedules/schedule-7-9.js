@@ -1,278 +1,286 @@
 // מערכת שעות לכיתות ז-ט
 const scheduleData79 = {
-    "08:30-09:20": { // שיעור 1
+    "0": { // שעה 0
+        "א": [],
+        "ב": [],
+        "ג": [],
+        "ד": [],
+        "ה": [],
+        "ו": []
+    },
+    "1": { // שעה 1
         "א": [
-            {course: "מפגש שכבת ז'", variant: "", teacher: "הילה ונתנאל"},
-            {course: "מפגש שכבת ח'", variant: "", teacher: "אורי ושי-לי"},
-            {course: "מפגש שכבת ט'", variant: "", teacher: "ענת וישי"}
+            {course: "אזרחות", variant: "", teacher: "ניר"},
+            {course: "אלגברה 1", variant: "1", teacher: "יאנה"},
+            {course: "אנגלית 6", variant: "1", teacher: "ישי"},
+            {course: "אנגלית 7", variant: "1", teacher: "קלרין"},
+            {course: "חנ\"ג בנות- משחקי כדור", variant: "", teacher: "עירית"},
+            {course: "מהפכות בהיסטוריה", variant: "", teacher: "שי-לי"}
         ],
         "ב": [
-            {course: "אלגברה 2", variant: "1", teacher: "טל"},
-            {course: "אלגברה 3", variant: "2", teacher: "ירון"},
-            {course: "אנגלית 5", variant: "1", teacher: "נתנאל"},
-            {course: "אנגלית 6", variant: "2", teacher: "קלרין"},
-            {course: "אנגלית 7", variant: "1", teacher: "ישי"},
-            {course: "עברית 5", variant: "2", teacher: "ציפי"},
-            {course: "עץ וטבע חט\"ב תיכון", variant: "1", teacher: "בני"}
+            {course: "אומנות עיוני", variant: "", teacher: "הילה"},
+            {course: "בטבע שלי", variant: "1", teacher: "חן וסמדר"},
+            {course: "בין שלמות למציאות", variant: "", teacher: "עדי"},
+            {course: "גאומטריה 2", variant: "1", teacher: "יאנה"},
+            {course: "עברית 5", variant: "1", teacher: "ציפי"},
+            {course: "פרוייקטים בטבע חט\"ב-תיכון", variant: "1", teacher: "בני"}
         ],
         "ג": [
-            {course: "אלגברה 1", variant: "2", teacher: "יאנה"},
-            {course: "אנגלית 6", variant: "1", teacher: "קלרין"},
-            {course: "אנגלית 7", variant: "2", teacher: "ישי"},
-            {course: "סדנת עיבוד עץ חט\"ב-תיכון", variant: "", teacher: "בני (סדנת נגרות)"},
-            {course: "עברית 5", variant: "1", teacher: "ציפי"},
-            {course: "עברית 6", variant: "2", teacher: "גילי"},
-            {course: "עברית 7", variant: "1", teacher: "ענת"}
+            {course: "אנגלית 5", variant: "1", teacher: "בל"},
+            {course: "אנגלית 6", variant: "1", teacher: "ישי"},
+            {course: "אנגלית 7", variant: "1", teacher: "קלרין"},
+            {course: "מעבדה טכנולוגית tech impact", variant: "", teacher: "טל ושמרית"},
+            {course: "פילוסופיה חט\"ב", variant: "", teacher: "ציפי"},
+            {course: "פרוייקטים בטבע חט\"ב-תיכון", variant: "2", teacher: "בני"}
         ],
         "ד": [
-            {course: "פרלמנט, שעה דמוקרטית", variant: "", teacher: ""}
+            {course: "שעה דמוקרטית ופרלמנט", variant: "", teacher: "בל, דובי, שי-לי, ענת, טל, מעין, שמרית"}
         ],
         "ה": [
-            {course: "אנגלית 5", variant: "2", teacher: "נתנאל"},
-            {course: "גאומטריה 1", variant: "1", teacher: "יאנה"},
-            {course: "הלך נגד הרוח", variant: "", teacher: "אילנית"},
-            {course: "מהו תאטרון", variant: "1", teacher: "בני"},
+            {course: "אלגברה 1", variant: "1", teacher: "יאנה"},
+            {course: "כיתת שאר רוח", variant: "", teacher: "ציפי"},
+            {course: "לב המדע tech impact", variant: "", teacher: "שמרית"},
             {course: "מהפכות בהיסטוריה", variant: "", teacher: "שי-לי"},
-            {course: "עברית 7", variant: "2", teacher: "ענת"},
+            {course: "ספורט ומיומנויות", variant: "1", teacher: "דנה"},
+            {course: "עיצוב מוצר", variant: "", teacher: "ענת"}
+        ],
+        "ו": []
+    },
+    "2": { // שעה 2
+        "א": [
+            {course: "אנגלית 5", variant: "1", teacher: "בל"},
+            {course: "אנגלית 6", variant: "2", teacher: "ישי"},
+            {course: "מבוא לחברה הישראלית", variant: "", teacher: "טל"},
+            {course: "עברית 6", variant: "1", teacher: "גילי"},
+            {course: "עברית 7", variant: "1", teacher: "אביבית"},
             {course: "פילאטיס חט\"ב", variant: "1", teacher: "עירית"}
         ],
-        "ו": []
-    },
-    "09:25-10:10": { // שיעור 2
-        "א": [
-            {course: "אלגברה 1", variant: "2", teacher: "יאנה"},
-            {course: "אנגלית 6", variant: "1", teacher: "קלרין"},
-            {course: "אנגלית 7", variant: "1", teacher: "ישי"},
-            {course: "עברית 5", variant: "1", teacher: "ציפי"},
-            {course: "עברית 6", variant: "2", teacher: "גילי"},
-            {course: "עברית 7", variant: "2", teacher: "ענת"}
-        ],
         "ב": [
-            {course: "אלגברה 1", variant: "1", teacher: "יאנה"},
-            {course: "אלגברה 2", variant: "2", teacher: "טל"},
-            {course: "אנגלית למתקדמים", variant: "", teacher: "קלרין"},
-            {course: "יזמות כלבנית", variant: "", teacher: "מעין"},
-            {course: "מנהיגות בתנ\"ך", variant: "", teacher: "אילנית"},
-            {course: "עץ וטבע חט\"ב תיכון", variant: "1", teacher: "בני"},
-            {course: "פודיז", variant: "1", teacher: "סמדר"},
-            {course: "פודיז", variant: "1", teacher: "אנה"}
+            {course: "אומנות עיוני", variant: "", teacher: "הילה"},
+            {course: "גאומטריה 3", variant: "1", teacher: "יאנה"},
+            {course: "חנ\"ג בנים חט\"ב", variant: "1", teacher: "נועם"},
+            {course: "ספרות חט\"ב", variant: "", teacher: "ציפי"},
+            {course: "פודיז ומיומנויות חברתיות", variant: "1", teacher: "דנה וסמדר"},
+            {course: "תאטרון חט\"ב", variant: "", teacher: "עומרי"}
         ],
         "ג": [
-            {course: "מפגש חיבורים", variant: "", teacher: ""}
+            {course: "איטלקית", variant: "", teacher: "ציפי"},
+            {course: "אנגלית 6", variant: "1", teacher: "ישי"},
+            {course: "יזמות ועשייה", variant: "", teacher: "אורי"},
+            {course: "מעבדה טכנולוגית tech impact", variant: "", teacher: "טל ושמרית"},
+            {course: "פרוייקטים בטבע חט\"ב-תיכון", variant: "3", teacher: "בני"},
+            {course: "תקשורת חזותית", variant: "", teacher: "ענת"}
         ],
         "ד": [
-            {course: "אומנות", variant: "1", teacher: "סמדר"},
-            {course: "אומנות", variant: "1", teacher: "שרון"},
-            {course: "אלגברה 2", variant: "1", teacher: "טל"},
-            {course: "אנגלית 7", variant: "2", teacher: "ישי"},
-            {course: "גאומטריה 2", variant: "1", teacher: "יאנה"},
-            {course: "יסודות הכימיה חט\"ב", variant: "", teacher: "אור"},
-            {course: "עץ וטבע חט\"ב תיכון", variant: "2", teacher: "בני"}
+            {course: "אנגלית 5", variant: "2", teacher: "בל"},
+            {course: "אנגלית 7", variant: "2", teacher: "קלרין"},
+            {course: "גאומטריה 2", variant: "2", teacher: "טל"},
+            {course: "גאומטריה 3", variant: "1", teacher: "יאנה"},
+            {course: "עברית 5", variant: "1", teacher: "ציפי"},
+            {course: "עברית 6", variant: "1", teacher: "גילי"},
+            {course: "פרוייקטים בטבע חט\"ב-תיכון", variant: "4", teacher: "בני"}
         ],
         "ה": [
-            {course: "אלגברה 1", variant: "2", teacher: "יאנה"},
-            {course: "אלגברה 3", variant: "1", teacher: "ירון"},
-            {course: "חנ\"ג בנות חט\"ב", variant: "1", teacher: "עירית"},
-            {course: "חנ\"ג בנים חט\"ב", variant: "1", teacher: "רוי"},
-            {course: "יזמות ועשייה", variant: "", teacher: "אורי"},
-            {course: "מהו תאטרון", variant: "1", teacher: "בני"}
+            {course: "אלגברה 1", variant: "1", teacher: "יאנה"},
+            {course: "חנ\"ג בנים חט\"ב", variant: "3", teacher: "נועם"},
+            {course: "כיתת שאר רוח", variant: "", teacher: "ציפי"},
+            {course: "לב המדע tech impact", variant: "", teacher: "שמרית"},
+            {course: "ספורט ומיומנויות", variant: "2", teacher: "דנה"},
+            {course: "קדם רפואה", variant: "", teacher: "עירית"}
         ],
         "ו": []
     },
-    "10:35-11:20": { // שיעור 3
+    "3": { // שעה 3
         "א": [
-            {course: "דילמות", variant: "1", teacher: "טל"},
-            {course: "חינוך פיננסי חט\"ב", variant: "", teacher: "בנצי"},
-            {course: "חנ\"ג בנות חט\"ב", variant: "1", teacher: "עירית"},
-            {course: "חנ\"ג בנים חט\"ב", variant: "1", teacher: "רוי"},
-            {course: "עברית 5", variant: "2", teacher: "ציפי"},
-            {course: "עברית 6", variant: "1", teacher: "גילי"},
-            {course: "עברית 7", variant: "1", teacher: "ענת"},
-            {course: "צילום", variant: "1", teacher: "סמדר"},
-            {course: "צילום", variant: "1", teacher: "שרון"}
+            {course: "מפגשים חברתיים", variant: "", teacher: "שי-לי"},
+            {course: "מפגשים חברתיים", variant: "", teacher: "ענת"},
+            {course: "מפגשים חברתיים", variant: "", teacher: "בל"},
+            {course: "מפגשים חברתיים", variant: "", teacher: "איתן"},
+            {course: "מפגשים חברתיים", variant: "", teacher: "אורי"},
+            {course: "מפגשים חברתיים", variant: "", teacher: "הילה"}
         ],
         "ב": [
-            {course: "Space-Up", variant: "", teacher: "טל"},
-            {course: "איך בונים מחשב?", variant: "", teacher: "אלחנן"},
+            {course: "אלגברה 2", variant: "1", teacher: "יאנה"},
+            {course: "אנגלית מתקדמים", variant: "", teacher: "קלרין"},
             {course: "גמולוגיה", variant: "", teacher: "ציפי"},
-            {course: "דמוקרטיות מסביב לעולם", variant: "", teacher: "ניר"},
-            {course: "יזמות כלבנית", variant: "", teacher: "מעין"},
-            {course: "מבוא לחברה הישראלית", variant: "", teacher: "טל"},
-            {course: "פודיז", variant: "1", teacher: "סמדר"}
+            {course: "פודיז ומיומנויות חברתיות", variant: "1", teacher: "דנה וסמדר"},
+            {course: "פיסול", variant: "", teacher: "הילה"},
+            {course: "תאטרון חט\"ב", variant: "", teacher: "עומרי"}
         ],
         "ג": [
             {course: "שעת ועדות", variant: "", teacher: ""}
         ],
         "ד": [
-            {course: "Space-Up", variant: "", teacher: "טל"},
-            {course: "אומנות", variant: "2", teacher: "שרון"},
-            {course: "אומנות", variant: "2", teacher: "סמדר"},
-            {course: "ארכאולוגיה", variant: "", teacher: "שי-לי"},
-            {course: "כלביה חט\"ב", variant: "", teacher: "מעין"},
+            {course: "אלגברה 1", variant: "2", teacher: "טל"},
+            {course: "אלגברה 2", variant: "1", teacher: "יאנה"},
+            {course: "אנגלית 7", variant: "1", teacher: "קלרין"},
+            {course: "גאומטריה 3", variant: "2", teacher: "טל"},
             {course: "עברית 5", variant: "1", teacher: "ציפי"},
             {course: "עברית 6", variant: "2", teacher: "גילי"}
         ],
         "ה": [
-            {course: "מפגש שכבת ז'", variant: "", teacher: "הילה ונתנאל"},
-            {course: "מפגש שכבת ח'", variant: "", teacher: "אורי ושי-לי"},
-            {course: "מפגש שכבת ט'", variant: "", teacher: "ענת וישי"}
+            {course: "איטלקית", variant: "", teacher: "ציפי"},
+            {course: "אלגברה 3", variant: "2", teacher: "איתן"},
+            {course: "אנגלית 6", variant: "2", teacher: "ישי"},
+            {course: "גאומטריה 1", variant: "2", teacher: "טל"},
+            {course: "גאומטריה 2", variant: "1", teacher: "יאנה"},
+            {course: "פילאטיס חט\"ב", variant: "2", teacher: "עירית"},
+            {course: "צילום ומדברים", variant: "2", teacher: "סמדר"}
         ],
         "ו": []
     },
-    "11:30-12:15": { // שיעור 4
+    "4": { // שעה 4
         "א": [
-            {course: "אנגלית 7", variant: "2", teacher: "ישי"},
-            {course: "הוביט והעולם הדמיוני של טולקין", variant: "", teacher: "יובל"},
-            {course: "חינוך פיננסי חט\"ב", variant: "", teacher: "בנצי"},
-            {course: "חנ\"ג בנות חט\"ב", variant: "2", teacher: "עירית"},
-            {course: "ילדים מלמדים ילדים", variant: "", teacher: "אורי"},
-            {course: "כדורעף בנים", variant: "", teacher: "רוי"},
-            {course: "קולנוע חט\"ב", variant: "", teacher: "עומרי"}
+            {course: "מפגשים חברתיים", variant: "", teacher: "איתן"},
+            {course: "מפגשים חברתיים", variant: "", teacher: "שי-לי"},
+            {course: "מפגשים חברתיים", variant: "", teacher: "ענת"},
+            {course: "מפגשים חברתיים", variant: "", teacher: "בל"},
+            {course: "מפגשים חברתיים", variant: "", teacher: "אורי"},
+            {course: "מפגשים חברתיים", variant: "", teacher: "הילה"}
         ],
         "ב": [
-            {course: "איך בונים מחשב?", variant: "", teacher: "אלחנן"},
-            {course: "הלך נגד הרוח", variant: "", teacher: "אילנית"},
-            {course: "כדורגל בנים חט\"ב", variant: "", teacher: "נועם"},
-            {course: "מהפכות בהיסטוריה", variant: "", teacher: "שי-לי"},
-            {course: "עברית 6", variant: "1", teacher: "גילי"},
+            {course: "אומנות ושיח", variant: "1", teacher: "סמדר"},
+            {course: "אלגברה 2", variant: "1", teacher: "יאנה"},
+            {course: "אנגלית 5", variant: "1", teacher: "בל"},
+            {course: "מהנדסי הדור הבא חט\"ב", variant: "", teacher: ""},
+            {course: "עברית 5", variant: "2", teacher: "ציפי"},
             {course: "פיסול", variant: "", teacher: "הילה"}
         ],
         "ג": [
-            {course: "אלגברה 1", variant: "1", teacher: "יאנה"},
-            {course: "אלגברה 2", variant: "2", teacher: "טל"},
-            {course: "אנגלית למתקדמים", variant: "", teacher: "קלרין"},
-            {course: "ארכאולוגיה", variant: "", teacher: "שי-לי"},
-            {course: "מבוא לחברה הישראלית", variant: "", teacher: "טל"},
-            {course: "פילוסופיה חט\"ב", variant: "", teacher: "ציפי"}
+            {course: "אנגלית 7", variant: "2", teacher: "קלרין"},
+            {course: "הרכב קולי-מסלול אומנויות הבמה", variant: "", teacher: "אורי"},
+            {course: "לב המדע ח-ט", variant: "", teacher: "שמרית"},
+            {course: "עברית 5", variant: "2", teacher: "ציפי"},
+            {course: "עברית 6", variant: "2", teacher: "גילי"}
         ],
         "ד": [
-            {course: "איטלקית", variant: "", teacher: "ציפי"},
-            {course: "אנגלית 6", variant: "2", teacher: "קלרין"},
-            {course: "ביולוגיה לחט\"ב", variant: "", teacher: "אור"},
-            {course: "בין שלמות למציאות", variant: "", teacher: "עדי"},
-            {course: "דמוקרטיות מסביב לעולם", variant: "", teacher: "ניר"},
-            {course: "סיפור אחד", variant: "", teacher: "טל"},
-            {course: "פודיז", variant: "3", teacher: "אנה"}
+            {course: "אלגברה 1", variant: "2", teacher: "טל"},
+            {course: "אנגלית מתקדמים", variant: "", teacher: "קלרין"},
+            {course: "ארכאולוגיה", variant: "", teacher: "שי-לי"},
+            {course: "גאומטריה 3", variant: "2", teacher: "טל"},
+            {course: "דוקו דמוקרטי", variant: "", teacher: "ענת"},
+            {course: "לב המדע ח-ט", variant: "", teacher: "שמרית"}
         ],
         "ה": [
-            {course: "מפגש שכבת ז'", variant: "", teacher: "הילה ונתנאל"},
-            {course: "מפגש שכבת ח'", variant: "", teacher: "אורי ושי-לי"},
-            {course: "מפגש שכבת ט'", variant: "", teacher: "ענת וישי"}
+            {course: "Life Dance בנות ו-ח", variant: "1", teacher: "תהילה"},
+            {course: "אומנות ושיח", variant: "2", teacher: "חן וסמדר"},
+            {course: "אלגברה 3", variant: "1", teacher: "יאנה"},
+            {course: "אלגברה 3", variant: "2", teacher: "איתן"},
+            {course: "אנגלית 6", variant: "2", teacher: "ישי"},
+            {course: "לב המדע 1", variant: "1", teacher: "שמרית"},
+            {course: "מבוא לתכנות", variant: "", teacher: "טל"}
         ],
         "ו": []
     },
-    "12:30-13:15": { // שיעור 5
+    "5": { // שעה 5
         "א": [
-            {course: "Cooking with Yishai", variant: "", teacher: "ישי"},
-            {course: "אנגלית 5", variant: "1", teacher: "נתנאל"},
-            {course: "גאומטריה 2", variant: "2", teacher: "יאנה"},
-            {course: "דיבייט", variant: "", teacher: "בנצי"},
-            {course: "ההוביט והעולם הדמיוני של טולקין", variant: "", teacher: "יובל"},
-            {course: "חנ\"ג בנים חט\"ב", variant: "2", teacher: "רוי"},
-            {course: "צילום", variant: "2", teacher: "שרון"},
-            {course: "צילום", variant: "2", teacher: "סמדר"},
-            {course: "קולנוע חט\"ב", variant: "", teacher: "עומרי"}
+            {course: "אלגברה 2", variant: "2", teacher: "איתן"},
+            {course: "אלגברה 3", variant: "1", teacher: "יאנה"},
+            {course: "גאומטריה 1", variant: "2", teacher: "טל"},
+            {course: "דמוקרטיות מסביב לעולם", variant: "", teacher: "ניר"},
+            {course: "חנ\"ג בנות- כושר וחיטוב", variant: "", teacher: "עירית"},
+            {course: "עברית 7", variant: "2", teacher: "אביבית"}
         ],
         "ב": [
-            {course: "איטלקית", variant: "", teacher: "ציפי"},
-            {course: "איך בונים מחשב?", variant: "", teacher: "אלחנן"},
-            {course: "אנגלית 5", variant: "2", teacher: "נתנאל"},
-            {course: "הקסם של הבינה ה-ח", variant: "", teacher: "פאטמה"},
-            {course: "פודיז", variant: "2", teacher: "סמדר"},
-            {course: "פודיז", variant: "2", teacher: "אנה"},
-            {course: "פיסול", variant: "", teacher: "הילה"},
-            {course: "קומיקס חט\"ב", variant: "1", teacher: "עומרי"}
+            {course: "אזרחות", variant: "", teacher: "ניר"},
+            {course: "אלגברה 2", variant: "2", teacher: "איתן"},
+            {course: "אנגלית 5", variant: "2", teacher: "בל"},
+            {course: "הרכב קולי-מסלול אומנויות הבמה", variant: "", teacher: "אורי"},
+            {course: "נביא ונבואות- תנ\"ך", variant: "", teacher: "אילנית"},
+            {course: "עברית 7", variant: "2", teacher: "אביבית"},
+            {course: "ערבית ה-ח", variant: "", teacher: "הייא"}
         ],
         "ג": [
-            {course: "אלגברה 2", variant: "1", teacher: "טל"},
-            {course: "אלגברה 3", variant: "1", teacher: "ירון"},
-            {course: "אנגלית 5", variant: "2", teacher: "נתנאל"},
-            {course: "בטבע שלי", variant: "1", teacher: "חן"},
-            {course: "דילמות", variant: "2", teacher: "טל"},
-            {course: "עברית 7", variant: "2", teacher: "ענת"},
-            {course: "תולדות הרוק והפופ", variant: "", teacher: "אורי"}
+            {course: "מפגשים חברתיים", variant: "", teacher: "איתן"},
+            {course: "מפגשים חברתיים", variant: "", teacher: "אורי"},
+            {course: "מפגשים חברתיים", variant: "", teacher: "בל"},
+            {course: "מפגשים חברתיים", variant: "", teacher: "שי-לי"},
+            {course: "מפגשים חברתיים", variant: "", teacher: "ענת"},
+            {course: "מפגשים חברתיים", variant: "", teacher: "הילה"}
         ],
         "ד": [
-            {course: "אותיות השפה הערבית", variant: "", teacher: "הייא"},
-            {course: "אלגברה 2", variant: "2", teacher: "טל"},
-            {course: "גאומטריה מתחילים", variant: "1", teacher: "יאנה"},
-            {course: "גמולוגיה", variant: "", teacher: "ציפי"},
-            {course: "הגנה עצמית חט\"ב", variant: "1", teacher: "נחשון"},
-            {course: "כימיה למתקדמים ח-ט", variant: "", teacher: "אור"},
-            {course: "ספרדית חט\"ב", variant: "", teacher: "קלרין"},
-            {course: "פודיז", variant: "3", teacher: "אנה"}
-        ],
-        "ה": [
-            {course: "אלגברה 1", variant: "1", teacher: "יאנה"},
-            {course: "אנגלית 7", variant: "1", teacher: "ישי"},
-            {course: "הגנה עצמית חט\"ב", variant: "2", teacher: "נחשון"},
-            {course: "מבנה גוף האדם ותפקידו", variant: "2", teacher: "עירית"},
-            {course: "מנהיגות בתנ\"ך", variant: "", teacher: "אילנית"},
-            {course: "פינת חי חט\"ב", variant: "", teacher: "אסף"},
-            {course: "ציור חט\"ב", variant: "", teacher: "הילה"}
-        ],
-        "ו": []
-    },
-    "13:30-14:15": { // שיעור 6
-        "א": [
-            {course: "Cooking with Yishai", variant: "", teacher: "ישי"},
-            {course: "אנגלית 6", variant: "2", teacher: "קלרין"},
-            {course: "דיבייט", variant: "", teacher: "בנצי"},
-            {course: "הרכב קולי חט\"ב", variant: "", teacher: "אורי"},
-            {course: "מבנה גוף האדם ותפקידו", variant: "1", teacher: "עירית"},
-            {course: "מרכז מלאכה", variant: "", teacher: "ציפי"}
-        ],
-        "ב": [
-            {course: "אומנות עיוני", variant: "", teacher: "הילה"},
-            {course: "אלגברה 3", variant: "1", teacher: "ירון"},
             {course: "גאומטריה 1", variant: "1", teacher: "יאנה"},
-            {course: "גאומטריה מתחילים", variant: "2", teacher: "טל"},
-            {course: "פודיז", variant: "2", teacher: "סמדר"},
-            {course: "פודיז", variant: "2", teacher: "אנה"},
-            {course: "קומיקס חט\"ב", variant: "2", teacher: "עומרי"}
-        ],
-        "ג": [],
-        "ד": [
-            {course: "אנגלית 5", variant: "1", teacher: "נתנאל"},
-            {course: "גאומטריה 1", variant: "2", teacher: "טל"},
-            {course: "גאומטריה 2", variant: "2", teacher: "יאנה"},
-            {course: "עברית 5", variant: "2", teacher: "ציפי"},
-            {course: "עברית 6", variant: "1", teacher: "גילי"},
-            {course: "עברית 7", variant: "1", teacher: "ענת"}
+            {course: "דוקו דמוקרטי", variant: "", teacher: "ענת"},
+            {course: "יוגה חט\"ב", variant: "", teacher: "דובי"},
+            {course: "לב המדע 1", variant: "2", teacher: "שמרית"},
+            {course: "מועדון תכנות חט\"ב", variant: "", teacher: "טל"}
         ],
         "ה": [
-            {course: "אלגברה 3", variant: "2", teacher: "ירון"},
-            {course: "בטבע שלי", variant: "2", teacher: "חן"},
-            {course: "חנ\"ג בנות חט\"ב", variant: "2", teacher: "עירית"},
-            {course: "חנ\"ג בנים חט\"ב", variant: "2", teacher: "רוי"},
-            {course: "מהו תאטרון", variant: "2", teacher: "בני"},
-            {course: "ערבית מדוברת", variant: "", teacher: "הייא"},
-            {course: "ציור חט\"ב", variant: "", teacher: "הילה"}
+            {course: "Life Dance בנות ו-ח", variant: "2", teacher: "תהילה"},
+            {course: "חנ\"ג בנות- כושר וחיטוב", variant: "", teacher: "עירית"},
+            {course: "לב המדע 1", variant: "1", teacher: "שמרית"},
+            {course: "מבוא לתכנות", variant: "", teacher: "טל"},
+            {course: "פודיז ומיומנויות חברתיות", variant: "2", teacher: "דנה וחן"},
+            {course: "תנועה,תפאורה-מסלול אומנויות הבמה", variant: "", teacher: "הילה"}
         ],
         "ו": []
     },
-    "14:15-15:00": { // שיעור 7
+    "6": { // שעה 6
         "א": [
-            {course: "Cooking with Yishai", variant: "", teacher: "ישי"},
-            {course: "מרכז מלאכה", variant: "", teacher: "ציפי"}
+            {course: "ארכאולוגיה", variant: "", teacher: "שי-לי"},
+            {course: "בשבילי ישראל", variant: "", teacher: "ניר וענת"},
+            {course: "גאומטריה 2", variant: "2", teacher: "טל"},
+            {course: "מסלול אומנויות הבמה משותף", variant: "", teacher: "אורי והילה ועומרי"},
+            {course: "עברית 7", variant: "2", teacher: "אביבית"},
+            {course: "קדם רפואה", variant: "", teacher: "עירית"}
         ],
         "ב": [
-            {course: "אומנות עיוני", variant: "", teacher: "הילה"},
-            {course: "גאומטריה 1", variant: "2", teacher: "טל"},
-            {course: "גאומטריה 2", variant: "1", teacher: "יאנה"}
+            {course: "אלגברה 2", variant: "2", teacher: "איתן"},
+            {course: "אנגלית 5", variant: "2", teacher: "בל"},
+            {course: "דמוקרטיות מסביב לעולם", variant: "", teacher: "ניר"},
+            {course: "נביא ונבואות- תנ\"ך", variant: "", teacher: "אילנית"},
+            {course: "עברית 7", variant: "1", teacher: "אביבית"},
+            {course: "צילום ומדברים", variant: "1", teacher: "דנה וסמדר"}
+        ],
+        "ג": [
+            {course: "אלגברה 3", variant: "1", teacher: "יאנה"},
+            {course: "חנ\"ג בנים חט\"ב", variant: "2", teacher: "נועם"},
+            {course: "מבוא לחברה הישראלית", variant: "", teacher: "טל"},
+            {course: "עברית 6", variant: "1", teacher: "גילי"},
+            {course: "עיצוב מוצר", variant: "", teacher: "ענת"},
+            {course: "קומיקס ו-ט", variant: "", teacher: "עומרי"}
+        ],
+        "ד": [
+            {course: "בטבע שלי", variant: "2", teacher: "חן"},
+            {course: "גמולוגיה", variant: "", teacher: "ציפי"},
+            {course: "לב המדע 1", variant: "2", teacher: "שמרית"},
+            {course: "תאטרון-מסלול אומנויות הבמה", variant: "", teacher: "עומרי"},
+            {course: "תכנות וממשקים tech impact", variant: "", teacher: "אלחנן וטל"},
+            {course: "תקשורת חזותית", variant: "", teacher: "ענת"}
+        ],
+        "ה": [
+            {course: "חנ\"ג בנות- משחקי כדור", variant: "", teacher: "עירית"},
+            {course: "ילדים מלמדים ילדים", variant: "", teacher: "אורי"},
+            {course: "מדע טק- יזמות וניהול פיננסי tech impact", variant: "", teacher: "איתן"},
+            {course: "מרכז מלאכה", variant: "", teacher: "ציפי"},
+            {course: "פודיז ומיומנויות חברתיות", variant: "2", teacher: "דנה וחן"},
+            {course: "תנועה,תפאורה-מסלול אומנויות הבמה", variant: "", teacher: "הילה"}
+        ],
+        "ו": []
+    },
+    "7": { // שעה 7
+        "א": [
+            {course: "אלגברה 1", variant: "2", teacher: "טל"},
+            {course: "אנגלית 7", variant: "2", teacher: "קלרין"},
+            {course: "בשבילי ישראל", variant: "", teacher: "ניר וענת"},
+            {course: "מסלול אומנויות הבמה משותף", variant: "", teacher: "אורי והילה ועומרי"},
+            {course: "עברית 6", variant: "2", teacher: "גילי"}
+        ],
+        "ב": [
+            {course: "אלגברה 3", variant: "2", teacher: "איתן"},
+            {course: "כדורעף חט\"ב", variant: "", teacher: "ניר"},
+            {course: "עברית 7", variant: "1", teacher: "אביבית"}
         ],
         "ג": [],
         "ד": [
-            {course: "אנגלית 6", variant: "1", teacher: "קלרין"},
-            {course: "מהנדסי הדור הבא חט\"ב", variant: "", teacher: "חיצוני"},
-            {course: "סאונד והפקה", variant: "", teacher: "אורי"},
-            {course: "ספרות חט\"ב", variant: "", teacher: "ציפי"}
+            {course: "עברית 5", variant: "2", teacher: "ציפי"},
+            {course: "תאטרון-מסלול אומנויות הבמה", variant: "", teacher: "עומרי"},
+            {course: "תכנות וממשקים tech impact", variant: "", teacher: "אלחנן וטל"}
         ],
         "ה": [
-            {course: "אלגברה 3", variant: "2", teacher: "ירון"},
-            {course: "כדורעף בנים", variant: "", teacher: "רוי"},
-            {course: "מהו תאטרון", variant: "2", teacher: "בני"},
-            {course: "פילאטיס חט\"ב", variant: "2", teacher: "עירית"}
+            {course: "גאומטריה 1", variant: "1", teacher: "יאנה"},
+            {course: "מדע טק- יזמות וניהול פיננסי tech impact", variant: "", teacher: "איתן"},
+            {course: "מרכז מלאכה", variant: "", teacher: "ציפי"}
         ],
         "ו": []
     }

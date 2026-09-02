@@ -1,6 +1,6 @@
 // Excel export functionality
 import { CONFIG } from './config.js';
-import { escapeCsvCell } from './utils.js';
+import { escapeCsvCell, formatCourseDisplay } from './utils.js';
 
 // Export schedule to Excel/CSV format
 export function exportToExcel(selectedCourses, rawScheduleData) {
@@ -18,8 +18,7 @@ export function exportToExcel(selectedCourses, rawScheduleData) {
             const key = `${time}_${day}`;
             if (selectedCourses[key]) {
                 const course = selectedCourses[key];
-                const variant = course.variant ? ` (${course.variant})` : '';
-                row.push(`${course.course}${variant} - ${course.teacher}`);
+                row.push(formatCourseDisplay(course.course, course.variant, course.teacher));
             } else {
                 row.push('');
             }

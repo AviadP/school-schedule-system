@@ -16,7 +16,9 @@ import {
     calculateStats,
     escapeHtml,
     escapeCsvCell,
-    isSameCourseSelection
+    isSameCourseSelection,
+    isSyntheticVariant,
+    SYNTHETIC_VARIANT_PREFIX
 } from '../js/utils.js';
 
 describe('Utility Functions', () => {
@@ -327,6 +329,41 @@ describe('Utility Functions', () => {
             expect(isSameCourseSelection(null, base)).toBe(false);
             expect(isSameCourseSelection(base, undefined)).toBe(false);
             expect(isSameCourseSelection(null, null)).toBe(false);
+        });
+    });
+
+    describe('isSyntheticVariant()', () => {
+        test('should recognise app-generated variants', () => {
+            expect(isSyntheticVariant(SYNTHETIC_VARIANT_PREFIX + '200')).toBe(true);
+        });
+
+        test('should treat real section numbers from the data as not synthetic', () => {
+            expect(isSyntheticVariant('1')).toBe(false);
+            expect(isSyntheticVariant('200')).toBe(false);
+            expect(isSyntheticVariant('')).toBe(false);
+        });
+
+        test('should handle non-string input', () => {
+            expect(isSyntheticVariant(null)).toBe(false);
+            expect(isSyntheticVariant(undefined)).toBe(false);
+            expect(isSyntheticVariant(200)).toBe(false);
+        });
+    });
+
+    describe('formatCourseDisplay() - synthetic variants and missing teachers', () => {
+        test('should hide an app-generated variant from the label', () => {
+            expect(formatCourseDisplay('ספרייה', SYNTHETIC_VARIANT_PREFIX + '203', 'חלי'))
+                .toBe('ספרייה - חלי');
+        });
+
+        test('should still show a real section number', () => {
+            expect(formatCourseDisplay('חשבון 4', '1', 'שרון')).toBe('חשבון 4 (1) - שרון');
+        });
+
+        test('should omit the dash when no teacher is known', () => {
+            expect(formatCourseDisplay('שעת ועדות', '', '')).toBe('שעת ועדות');
+            expect(formatCourseDisplay('שעת ועדות', SYNTHETIC_VARIANT_PREFIX + '229', ''))
+                .toBe('שעת ועדות');
         });
     });
 });
