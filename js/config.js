@@ -51,6 +51,7 @@ export const CONFIG = {
         NO_SELECTION: 'לא נבחר',
         EXPORT_SUCCESS: 'המערכת יוצאה בהצלחה',
         CLEAR_SUCCESS: 'הבחירות נוקו',
+        CONFIRM_REBUILD: 'יש לך בחירות קיימות. יצירת המערכת מחדש תמחק אותן. להמשיך?',
         LOADING: 'טוען...'
     }
 };

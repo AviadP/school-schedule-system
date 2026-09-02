@@ -1,5 +1,6 @@
 // Excel export functionality
 import { CONFIG } from './config.js';
+import { escapeCsvCell } from './utils.js';
 
 // Export schedule to Excel/CSV format
 export function exportToExcel(selectedCourses, rawScheduleData) {
@@ -30,7 +31,7 @@ export function exportToExcel(selectedCourses, rawScheduleData) {
     // Convert to CSV format
     let csv = '\ufeff'; // BOM for Hebrew support
     data.forEach(row => {
-        csv += row.map(cell => `"${cell}"`).join(',') + '\n';
+        csv += row.map(cell => escapeCsvCell(cell)).join(',') + '\n';
     });
     
     // Download file
