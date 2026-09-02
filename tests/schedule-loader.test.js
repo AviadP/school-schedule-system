@@ -117,15 +117,23 @@ describe('Schedule Loader Functions', () => {
             
             gradeLevels.forEach(gradeLevel => {
                 const schedule = getScheduleData(gradeLevel);
+                const timeSlots = Object.keys(schedule);
                 
-                // Check time slots
-                CONFIG.TIME_SLOTS.forEach(timeSlot => {
-                    expect(schedule[timeSlot]).toBeDefined();
-                    
-                    // Check days
+                // Each grade defines its own time slots - the table is built from the
+                // schedule's own keys, not from a shared list, so grades legitimately
+                // differ in how many periods they run and what they are called.
+                expect(timeSlots.length).toBeGreaterThan(0);
+                
+                timeSlots.forEach(timeSlot => {
+                    // Every grade must cover every day, even if a day has no lessons
                     CONFIG.DAYS.forEach(day => {
                         expect(schedule[timeSlot][day]).toBeDefined();
                         expect(Array.isArray(schedule[timeSlot][day])).toBe(true);
+                    });
+                    
+                    // and must not carry days outside the configured week
+                    Object.keys(schedule[timeSlot]).forEach(day => {
+                        expect(CONFIG.DAYS).toContain(day);
                     });
                 });
             });
