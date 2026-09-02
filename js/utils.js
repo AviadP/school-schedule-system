@@ -96,3 +96,30 @@ export function calculateStats(selectedCourses) {
         uniqueCourses
     };
 }
+
+// Escape a value for safe interpolation into HTML (attribute or text).
+// Hebrew course names use gershayim (") for abbreviations - e.g. חט"ב, תנ"ך -
+// which would otherwise terminate a quoted HTML attribute early.
+export function escapeHtml(value) {
+    return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+// Wrap a value as a quoted CSV field, doubling embedded quotes per RFC 4180
+export function escapeCsvCell(value) {
+    return `"${String(value ?? '').replace(/"/g, '""')}"`;
+}
+
+// Compare two course selections by identity: course + variant + teacher.
+// That triple is what identifies a course everywhere in the app, so keep this the
+// single definition - the copies of this check had already drifted apart.
+export function isSameCourseSelection(a, b) {
+    return Boolean(a && b &&
+        a.course === b.course &&
+        a.variant === b.variant &&
+        a.teacher === b.teacher);
+}

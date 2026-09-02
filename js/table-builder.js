@@ -1,6 +1,6 @@
 // Table building and management functionality
 import { CONFIG } from './config.js';
-import { getDayName, isSpecialCourse, createCourseKey, createCourseValue, calculateStats } from './utils.js';
+import { getDayName, createCourseValue, calculateStats, escapeHtml, isSameCourseSelection } from './utils.js';
 
 // Global variables for table state
 let selectedCourses = {};
@@ -63,8 +63,9 @@ export function createScheduleTable(rawScheduleData, gradeLevel) {
                 
                 options.forEach(option => {
                     const displayVariant = option.variant ? ` (${option.variant})` : '';
-                    const value = `${option.course}|${option.variant}|${option.teacher}`;
-                    html += `<option value="${value}">${option.course}${displayVariant} - ${option.teacher}</option>`;
+                    const value = createCourseValue(option.course, option.variant, option.teacher);
+                    const label = `${option.course}${displayVariant} - ${option.teacher}`;
+                    html += `<option value="${escapeHtml(value)}">${escapeHtml(label)}</option>`;
                 });
                 
                 html += `</select>`;
@@ -122,6 +123,8 @@ export function handleSelectionChange(time, day, rawScheduleData) {
     }
     
     const [course, variant, teacher] = value.split('|');
+    const key = `${time}_${day}`;
+    const incoming = { course, variant, teacher };
     
     // Check for conflicts
     const conflicts = checkForConflicts(course, variant, teacher, time, day);
@@ -151,8 +154,16 @@ export function handleSelectionChange(time, day, rawScheduleData) {
         });
     }
     
+    // Replacing the course's MANUAL anchor must also drop the copies it was synced into,
+    // or they are stranded with no anchor. Replacing a synced copy needs no cascade - the
+    // anchor still stands - and cascading there would silently delete cells the user kept.
+    const outgoing = selectedCourses[key];
+    if (outgoing && !outgoing.isAutoSynced && !isSameCourseSelection(outgoing, incoming)) {
+        handleCourseDeletion(time, day, key);
+    }
+    
     // Save the selection
-    selectedCourses[`${time}_${day}`] = {
+    selectedCourses[key] = {
         course: course,
         variant: variant,
         teacher: teacher,
@@ -214,8 +225,10 @@ function checkForConflicts(course, variant, teacher, currentTime, currentDay) {
     return conflicts;
 }
 
-// Handle course deletion and all its synchronized instances
-function handleCourseDeletion(time, day) {
+// Handle course deletion and all its synchronized instances.
+// skipKey leaves that one cell's dropdown alone - used when replacing a selection in
+// place, where the cell already displays the incoming course.
+function handleCourseDeletion(time, day, skipKey = null) {
     const key = `${time}_${day}`;
     const courseToDelete = selectedCourses[key];
     
@@ -223,11 +236,9 @@ function handleCourseDeletion(time, day) {
     
     // Delete all instances of the same course
     Object.keys(selectedCourses).forEach(courseKey => {
-        const selected = selectedCourses[courseKey];
-        if (selected.course === courseToDelete.course && 
-            selected.variant === courseToDelete.variant &&
-            selected.teacher === courseToDelete.teacher) {
+        if (isSameCourseSelection(selectedCourses[courseKey], courseToDelete)) {
             delete selectedCourses[courseKey];
+            if (courseKey === skipKey) return;
             const [t, d] = courseKey.split('_');
             const selectElement = document.getElementById(`select_${t}_${d}`);
             if (selectElement) {
@@ -260,19 +271,18 @@ function syncRelatedCourses(course, variant, teacher, currentTime, currentDay, i
             }
             
             const options = rawScheduleData[time][day];
-            const matchingOption = options.find(opt => 
-                opt.course === course && 
-                opt.variant === variant && 
-                opt.teacher === teacher
+            const matchingOption = options.find(opt =>
+                isSameCourseSelection(opt, {course, variant, teacher})
             );
             
             if (matchingOption) {
                 const key = `${time}_${day}`;
                 
-                // Check if there's already a different selection here
-                if (selectedCourses[key] && 
-                    (selectedCourses[key].course !== course || 
-                     selectedCourses[key].variant !== variant)) {
+                // Check if there's already a different selection here.
+                // Must compare the teacher too - same course/variant taught by someone
+                // else is a different choice and needs the user's confirmation.
+                if (selectedCourses[key] &&
+                    !isSameCourseSelection(selectedCourses[key], {course, variant, teacher})) {
                     conflicts.push({
                         time: time,
                         day: day,
@@ -307,6 +317,15 @@ function syncRelatedCourses(course, variant, teacher, currentTime, currentDay, i
     
     // Now perform the actual sync
     syncTargets.forEach(target => {
+        // Displacing a different course here must also remove the copies IT was synced
+        // into, or they are stranded with no manual anchor - the same orphan class as
+        // replacing a cell by hand.
+        const displaced = selectedCourses[target.key];
+        if (displaced && !displaced.isAutoSynced &&
+            !isSameCourseSelection(displaced, {course, variant, teacher})) {
+            handleCourseDeletion(target.time, target.day);
+        }
+        
         selectedCourses[target.key] = {
             course: course,
             variant: variant,

@@ -13,7 +13,10 @@ import {
     isValidGradeLevel,
     hasValidTeacher,
     createCourseObject,
-    calculateStats
+    calculateStats,
+    escapeHtml,
+    escapeCsvCell,
+    isSameCourseSelection
 } from '../js/utils.js';
 
 describe('Utility Functions', () => {
@@ -244,6 +247,86 @@ describe('Utility Functions', () => {
 
             const stats = calculateStats(selectedCourses);
             expect(stats.uniqueCourses).toBe(2); // אנגלית variant 1 and אנגלית variant 2
+        });
+    });
+
+    describe('escapeHtml()', () => {
+        test('should escape double quotes so they cannot terminate an HTML attribute', () => {
+            expect(escapeHtml('חט"ב')).toBe('חט&quot;ב');
+        });
+
+        test('should escape all HTML-special characters', () => {
+            expect(escapeHtml('<b>')).toBe('&lt;b&gt;');
+            expect(escapeHtml("it's")).toBe('it&#39;s');
+        });
+
+        test('should escape ampersands first so entities are not double-encoded', () => {
+            expect(escapeHtml('a & "b"')).toBe('a &amp; &quot;b&quot;');
+        });
+
+        test('should round-trip a real gershayim course value through a parsed attribute', () => {
+            const value = 'חנ"ג בנים חט"ב|1|רוי';
+            const attr = escapeHtml(value);
+            expect(attr).not.toContain('"');
+            // what the browser hands back after decoding the attribute
+            const decoded = attr.replace(/&quot;/g, '"').replace(/&amp;/g, '&');
+            expect(decoded).toBe(value);
+            expect(decoded.split('|')).toHaveLength(3);
+        });
+
+        test('should handle null and undefined without throwing', () => {
+            expect(escapeHtml(null)).toBe('');
+            expect(escapeHtml(undefined)).toBe('');
+        });
+    });
+
+    describe('escapeCsvCell()', () => {
+        test('should wrap a plain value in quotes', () => {
+            expect(escapeCsvCell('מתמטיקה')).toBe('"מתמטיקה"');
+        });
+
+        test('should double embedded quotes per RFC 4180', () => {
+            expect(escapeCsvCell('מנהיגות בתנ"ך')).toBe('"מנהיגות בתנ""ך"');
+        });
+
+        test('should preserve a value containing a comma', () => {
+            expect(escapeCsvCell('פרלמנט, שעה דמוקרטית')).toBe('"פרלמנט, שעה דמוקרטית"');
+        });
+
+        test('should handle empty, null and undefined', () => {
+            expect(escapeCsvCell('')).toBe('""');
+            expect(escapeCsvCell(null)).toBe('""');
+            expect(escapeCsvCell(undefined)).toBe('""');
+        });
+    });
+
+    describe('isSameCourseSelection()', () => {
+        const base = { course: 'פודיז', variant: '1', teacher: 'אנה' };
+
+        test('should treat an identical triple as the same selection', () => {
+            expect(isSameCourseSelection(base, { ...base })).toBe(true);
+        });
+
+        test('should treat a different TEACHER as a different selection', () => {
+            // the bug this function replaces: teacher was omitted, so the same course
+            // taught by someone else was silently overwritten without confirmation
+            expect(isSameCourseSelection(base, { ...base, teacher: 'סמדר' })).toBe(false);
+        });
+
+        test('should treat a different course or variant as different', () => {
+            expect(isSameCourseSelection(base, { ...base, course: 'מתמטיקה' })).toBe(false);
+            expect(isSameCourseSelection(base, { ...base, variant: '2' })).toBe(false);
+        });
+
+        test('should ignore extra fields such as isAutoSynced', () => {
+            expect(isSameCourseSelection({ ...base, isAutoSynced: true },
+                                         { ...base, isAutoSynced: false })).toBe(true);
+        });
+
+        test('should return false for null or undefined operands', () => {
+            expect(isSameCourseSelection(null, base)).toBe(false);
+            expect(isSameCourseSelection(base, undefined)).toBe(false);
+            expect(isSameCourseSelection(null, null)).toBe(false);
         });
     });
 });

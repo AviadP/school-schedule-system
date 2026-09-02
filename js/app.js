@@ -1,4 +1,5 @@
 // Main application entry point
+import { CONFIG } from './config.js';
 import { getScheduleData } from '../data/schedule-loader.js';
 import { createScheduleTable, handleSelectionChange, clearSelections, getSelectedCourses } from './table-builder.js';
 import { exportToExcel } from './excel-export.js';
@@ -19,6 +20,14 @@ function initializeApp() {
 
 // Create schedule table for specific grade level
 function createTable(gradeLevel) {
+    // Rebuilding always clears every selection - confirm before discarding the user's work
+    const tableExists = Boolean(document.getElementById('scheduleTable'));
+    const hasSelections = Object.keys(getSelectedCourses()).length > 0;
+
+    if (tableExists && hasSelections && !confirm(CONFIG.MESSAGES.CONFIRM_REBUILD)) {
+        return;
+    }
+
     currentGradeLevel = gradeLevel;
     rawScheduleData = getScheduleData(gradeLevel);
     createScheduleTable(rawScheduleData, gradeLevel);
