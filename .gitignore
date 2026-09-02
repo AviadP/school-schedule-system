@@ -51,6 +51,10 @@ jspm_packages/
 # dotenv environment variables file
 .env
 
+# Source timetable spreadsheets - internal only.
+# This repo is public; the CSVs carry teacher names and room assignments.
+.data/
+
 # Claude Code documentation (internal use only)
 CLAUDE.md
 
