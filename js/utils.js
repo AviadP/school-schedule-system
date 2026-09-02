@@ -56,9 +56,16 @@ export function isSyntheticVariant(variant) {
     return typeof variant === 'string' && variant.startsWith(SYNTHETIC_VARIANT_PREFIX);
 }
 
+// True only for a section number that came from the schedule data. Courses whose
+// variant is blank or app-generated are separate slots, not alternative sections
+// of one class, so they must never be treated as competing choices.
+export function hasRealSection(variant) {
+    return Boolean(variant) && !isSyntheticVariant(variant);
+}
+
 // Format course display name: real section number only, teacher only when known
 export function formatCourseDisplay(course, variant, teacher) {
-    const displayVariant = variant && !isSyntheticVariant(variant) ? ` (${variant})` : '';
+    const displayVariant = hasRealSection(variant) ? ` (${variant})` : '';
     const displayTeacher = teacher ? ` - ${teacher}` : '';
     return `${course}${displayVariant}${displayTeacher}`;
 }
