@@ -14,15 +14,19 @@ export const CONFIG = {
         'ו': 'יום שישי'
     },
     
-    // Time slots for the schedule
-    TIME_SLOTS: [
-        '08:30-09:20',
-        '09:25-10:10', 
-        '10:35-11:20',
-        '11:30-12:15',
-        '12:30-13:15',
-        '13:30-14:15'
-    ],
+    // Clock time of each period (schedule hour key -> time), 2026-27 timetable.
+    // Hour 0 is the morning meeting; hour 8 does not exist and hour 10 has no published time.
+    PERIOD_TIMES: {
+        '0': '08:15-08:25',
+        '1': '08:30-09:10',
+        '2': '09:15-09:55',
+        '3': '10:20-11:00',
+        '4': '11:05-11:45',
+        '5': '11:55-12:35',
+        '6': '12:40-13:20',
+        '7': '13:30-14:10',
+        '9': '14:50-15:30'
+    },
     
     // Grade level display names
     GRADE_LEVELS: {

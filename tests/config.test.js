@@ -6,7 +6,7 @@ describe('CONFIG constants', () => {
     test('should have all required top-level properties', () => {
         expect(CONFIG.DAYS).toBeDefined();
         expect(CONFIG.DAY_NAMES).toBeDefined();
-        expect(CONFIG.TIME_SLOTS).toBeDefined();
+        expect(CONFIG.PERIOD_TIMES).toBeDefined();
         expect(CONFIG.GRADE_LEVELS).toBeDefined();
         expect(CONFIG.COLORS).toBeDefined();
         expect(CONFIG.EXCEL).toBeDefined();
@@ -35,19 +35,31 @@ describe('CONFIG constants', () => {
         });
     });
 
-    describe('TIME_SLOTS array', () => {
-        test('should contain 6 time periods', () => {
-            expect(CONFIG.TIME_SLOTS).toHaveLength(6);
+    describe('PERIOD_TIMES mapping', () => {
+        test('should cover the morning meeting and periods 1-6', () => {
+            ['0', '1', '2', '3', '4', '5', '6'].forEach(hour => {
+                expect(CONFIG.PERIOD_TIMES[hour]).toBeDefined();
+            });
         });
 
         test('should have proper time format', () => {
-            CONFIG.TIME_SLOTS.forEach(slot => {
+            Object.values(CONFIG.PERIOD_TIMES).forEach(slot => {
                 expect(slot).toMatch(/^\d{2}:\d{2}-\d{2}:\d{2}$/);
             });
         });
 
-        test('should start with morning period', () => {
-            expect(CONFIG.TIME_SLOTS[0]).toBe('08:30-09:20');
+        test('should run in chronological order without overlaps', () => {
+            const hours = Object.keys(CONFIG.PERIOD_TIMES).map(Number).sort((a, b) => a - b);
+            for (let i = 1; i < hours.length; i++) {
+                const prevEnd = CONFIG.PERIOD_TIMES[hours[i - 1]].split('-')[1];
+                const start = CONFIG.PERIOD_TIMES[hours[i]].split('-')[0];
+                expect(start > prevEnd).toBe(true);
+            }
+        });
+
+        test('should start with the morning meeting', () => {
+            expect(CONFIG.PERIOD_TIMES['0']).toBe('08:15-08:25');
+            expect(CONFIG.PERIOD_TIMES['1']).toBe('08:30-09:10');
         });
     });
 

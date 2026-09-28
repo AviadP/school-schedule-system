@@ -79,12 +79,6 @@ button:disabled:hover {
     outline-offset: 2px;
 }
 
-.pending-note {
-    margin: 4px 5px 0;
-    font-size: 14px;
-    color: #78909c;
-}
-
 #processBtn34, #processBtn56, #processBtn79 {
     background-color: #2196F3;
 }
@@ -123,6 +117,14 @@ tr:nth-child(even) {
 .time-cell {
     background-color: #e8f5e9;
     font-weight: bold;
+}
+
+.period-time {
+    display: block;
+    font-size: 0.75em;
+    font-weight: normal;
+    direction: ltr;
+    white-space: nowrap;
 }
 
 #output {

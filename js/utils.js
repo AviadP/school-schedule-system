@@ -70,6 +70,11 @@ export function formatCourseDisplay(course, variant, teacher) {
     return `${course}${displayVariant}${displayTeacher}`;
 }
 
+// Clock time of a schedule hour ('1' -> '08:30-09:10'), or '' when none is published
+export function getPeriodTime(hour) {
+    return CONFIG.PERIOD_TIMES[hour] || '';
+}
+
 // Validate time slot format
 export function isValidTimeSlot(timeSlot) {
     return /^\d{2}:\d{2}-\d{2}:\d{2}$/.test(timeSlot);
