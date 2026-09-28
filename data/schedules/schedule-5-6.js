@@ -1,4 +1,5 @@
 // מערכת שעות לכיתות ה-ו
+// תשפ"ז, מעודכנת ל-28.9.2026
 const scheduleData56 = {
     "0": { // שעה 0
         "א": [
@@ -37,11 +38,11 @@ const scheduleData56 = {
     },
     "1": { // שעה 1
         "א": [
-            {course: "מהנדסי הדור הבא ה-ו מתחילים", variant: "", teacher: ""},
+            {course: "מהנדסי הדור הבא ה-ו מתחילים", variant: "", teacher: "אבי"},
             {course: "מיומנויות חשבון ה-ו", variant: "1", teacher: "בראא"},
             {course: "מרחב ה-ו", variant: "", teacher: "יובל"},
             {course: "פרוייקטים בטבע ה-ו", variant: "", teacher: "בני"},
-            {course: "תלת-מימד ה-ו", variant: "", teacher: "עומרי"}
+            {course: "תלת-מימד ה-ו", variant: "1", teacher: "עומרי"}
         ],
         "ב": [
             {course: "מפגשים ה'", variant: "1", teacher: "יובל"},
@@ -64,9 +65,11 @@ const scheduleData56 = {
             {course: "כיתת שאר רוח", variant: "", teacher: "ציפי"},
             {course: "מפגשים ה'", variant: "1", teacher: "יובל"},
             {course: "מפגשים ה'", variant: "2", teacher: "נחשון"},
-            {course: "מרחב ה-ו", variant: "", teacher: "מירית"}
+            {course: "מרחב ה-ו", variant: "", teacher: "מירית"},
+            {course: "ספרייה", variant: "", teacher: "ביאן"}
         ],
         "ו": [
+            {course: "הורים מובילים שישי", variant: "", teacher: ""},
             {course: "חשבון 3", variant: "2", teacher: "אסף"},
             {course: "כדורגל בנים ה-ו", variant: "", teacher: "נועם"},
             {course: "מרחב ה-ו", variant: "", teacher: "מירית"},
@@ -77,8 +80,9 @@ const scheduleData56 = {
         "א": [
             {course: "אנגלית 3", variant: "1", teacher: "הלל"},
             {course: "בישול ה-ו", variant: "", teacher: "ורד"},
-            {course: "מהנדסי הדור הבא ה-ו ממשיכים", variant: "", teacher: ""},
+            {course: "מהנדסי הדור הבא ה-ו ממשיכים", variant: "", teacher: "אבי"},
             {course: "מרחב ה-ו", variant: "", teacher: "יובל"},
+            {course: "ספרייה", variant: "", teacher: ""},
             {course: "קיימות ג-ו", variant: "1", teacher: "רובי"}
         ],
         "ב": [
@@ -86,6 +90,7 @@ const scheduleData56 = {
             {course: "ברחובות שלנו ד-ו", variant: "", teacher: "שחר"},
             {course: "יפן למתקדמים ג-ו", variant: "", teacher: "אוהד"},
             {course: "מרחב ה-ו", variant: "", teacher: "עדי"},
+            {course: "ספרייה", variant: "", teacher: ""},
             {course: "עברית 4", variant: "1", teacher: "מירית"}
         ],
         "ג": [
@@ -97,6 +102,7 @@ const scheduleData56 = {
         ],
         "ד": [
             {course: "כניסה לעולם המוסיקה ה-ו", variant: "", teacher: "אורי"},
+            {course: "מיומנויות חשבון ה-ו", variant: "2", teacher: "בראא"},
             {course: "מפגשים ו'", variant: "1", teacher: "מירית"},
             {course: "מפגשים ו'", variant: "2", teacher: "עומרי"},
             {course: "מרחב ה-ו", variant: "", teacher: "איידה"},
@@ -104,32 +110,36 @@ const scheduleData56 = {
         ],
         "ה": [
             {course: "איפה אני חי.ה?", variant: "", teacher: "טל"},
-            {course: "אסטרופיזיקה ה-ו", variant: "", teacher: "יובל"},
+            {course: "הרכב קולי ד-ו", variant: "", teacher: "יובל"},
             {course: "חשבון 3", variant: "1", teacher: "פאטמה"},
             {course: "חשבון 3", variant: "2", teacher: "אסף"},
-            {course: "כיתת שאר רוח", variant: "", teacher: "ציפי"}
+            {course: "כיתת שאר רוח", variant: "", teacher: "ציפי"},
+            {course: "ספרייה", variant: "", teacher: "ביאן"}
         ],
         "ו": [
             {course: "הארי פוטר וחברים ה'", variant: "", teacher: "גילי"},
+            {course: "הורים מובילים שישי", variant: "", teacher: ""},
             {course: "כדורגל בנות ה-ו", variant: "", teacher: "נועם"},
+            {course: "משחק המדינות (בהנחיית ירדן) ד-ו", variant: "", teacher: "לילך"},
             {course: "עברית 4", variant: "1", teacher: "מירית"},
             {course: "תאטרון ה-ו", variant: "1", teacher: "עומרי"}
         ]
     },
     "3": { // שעה 3
         "א": [
-            {course: "אנגלית מתקדמים ה-ו", variant: "", teacher: "הלל"},
             {course: "בישול ה-ו", variant: "", teacher: "ורד"},
-            {course: "יוצרים בעץ ה-ו", variant: "", teacher: "בני"},
             {course: "מדעים ה-ו", variant: "1", teacher: "בראא"},
+            {course: "מתקדמים באנגלית", variant: "1", teacher: "הלל"},
+            {course: "ספרייה", variant: "", teacher: ""},
             {course: "עברית 3", variant: "1", teacher: "גילי"},
             {course: "קיימות ג-ו", variant: "1", teacher: "רובי"}
         ],
         "ב": [
             {course: "ברחובות שלנו ד-ו", variant: "", teacher: "שחר"},
             {course: "חשבון 4", variant: "1", teacher: "שרון"},
-            {course: "מרחב ה-ו", variant: "", teacher: "אורי"},
-            {course: "עברית 4", variant: "2", teacher: "מירית"}
+            {course: "מרחב ה-ו", variant: "", teacher: "עדי"},
+            {course: "עברית 4", variant: "2", teacher: "מירית"},
+            {course: "קצב הלב", variant: "2", teacher: "אורי"}
         ],
         "ג": [
             {course: "שעת ועדות", variant: "", teacher: ""}
@@ -145,9 +155,11 @@ const scheduleData56 = {
             {course: "ההיסטוריה של יוון ורומא ה-ו", variant: "", teacher: "יובל"},
             {course: "חשבון 3", variant: "2", teacher: "אסף"},
             {course: "חשבון 4", variant: "1", teacher: "שרון"},
-            {course: "יוזמות וחוסכות (חשיבה פיננסית) ה-ו", variant: "", teacher: "פאטמה"}
+            {course: "יוזמות וחוסכות (חשיבה פיננסית) ה-ו", variant: "", teacher: "פאטמה"},
+            {course: "ספרייה", variant: "", teacher: "ביאן"}
         ],
         "ו": [
+            {course: "הורים מובילים שישי", variant: "", teacher: ""},
             {course: "יאללה מהפיכה!", variant: "", teacher: "אור"},
             {course: "יוצרים גינה ו'", variant: "", teacher: "לילך"},
             {course: "מדעים ה-ו", variant: "4", teacher: "איידה"},
@@ -158,10 +170,10 @@ const scheduleData56 = {
     "4": { // שעה 4
         "א": [
             {course: "אנגלית 4", variant: "1", teacher: "ישי"},
-            {course: "אנגלית מתקדמים ה-ו", variant: "", teacher: "הלל"},
             {course: "בישול ה-ו", variant: "", teacher: "ורד"},
             {course: "מרחב ה-ו", variant: "", teacher: "פאטמה"},
-            {course: "משחקים וחברים ה'", variant: "", teacher: "גילי"}
+            {course: "מתקדמים באנגלית", variant: "2", teacher: "הלל"},
+            {course: "עברית 3", variant: "1", teacher: "גילי"}
         ],
         "ב": [
             {course: "ברחובות שלנו ד-ו", variant: "", teacher: "שחר"},
@@ -174,7 +186,7 @@ const scheduleData56 = {
             {course: "אומנות אישית ה'", variant: "", teacher: "נירה וסמדר"},
             {course: "אנגלית 4", variant: "1", teacher: "ישי"},
             {course: "חוקרים את אמריקה ה-ו", variant: "2", teacher: "איידה"},
-            {course: "חנ\"ג ה-ו", variant: "", teacher: "נועם"},
+            {course: "מרחב ה-ו", variant: "", teacher: "אורי"},
             {course: "עברית 3", variant: "1", teacher: "גילי"}
         ],
         "ד": [
@@ -182,17 +194,19 @@ const scheduleData56 = {
             {course: "מרחב ה-ו", variant: "", teacher: "בת-אל"},
             {course: "נחליאלי-גינה ה-ו", variant: "", teacher: ""},
             {course: "עברית 4", variant: "1", teacher: "מירית"},
-            {course: "קומיקס ה-ו", variant: "", teacher: "עומרי"}
+            {course: "תלת-מימד ה-ו", variant: "2", teacher: "עומרי"}
         ],
         "ה": [
-            {course: "Life Dance בנות ו-ח", variant: "1", teacher: "תהילה"},
             {course: "אומנות ה-ו", variant: "1", teacher: "הילה"},
-            {course: "הרכב קולי ד-ו", variant: "", teacher: "יובל"},
+            {course: "אסטרופיזיקה ה-ו", variant: "", teacher: "יובל"},
             {course: "חשבון 4", variant: "1", teacher: "שרון"},
             {course: "מרחב ה-ו", variant: "", teacher: "עדי"},
-            {course: "עברית 3", variant: "2", teacher: "מירית"}
+            {course: "ספרייה", variant: "", teacher: "ביאן"},
+            {course: "עברית 3", variant: "2", teacher: "מירית"},
+            {course: "Life Dance בנות ו-ח", variant: "1", teacher: "תהילה"}
         ],
         "ו": [
+            {course: "הורים מובילים שישי", variant: "", teacher: ""},
             {course: "חשבון 4", variant: "2", teacher: "אסף"},
             {course: "מסביב לעולם ה-ו", variant: "", teacher: "איידה"},
             {course: "מרחב ה-ו", variant: "", teacher: "בת-אל"},
@@ -210,28 +224,27 @@ const scheduleData56 = {
             {course: "אומנות ה-ו", variant: "2", teacher: "מורן"},
             {course: "חוקרים את אמריקה ה-ו", variant: "1", teacher: "איידה"},
             {course: "חשבון 4", variant: "2", teacher: "אסף"},
-            {course: "ערבית ה-ח", variant: "", teacher: "הייא"},
             {course: "שר הטבעות ה-ו", variant: "", teacher: "יובל"}
         ],
         "ג": [
             {course: "מפגשים ה'", variant: "1", teacher: "יובל"},
             {course: "מפגשים ה'", variant: "2", teacher: "נחשון"},
             {course: "מפגשים ו'", variant: "1", teacher: "מירית"},
-            {course: "מפגשים ו'", variant: "2", teacher: "עומרי"},
-            {course: "מרחב ה-ו", variant: "", teacher: "עדי"}
+            {course: "מפגשים ו'", variant: "2", teacher: "עומרי"}
         ],
         "ד": [
             {course: "אנגלית 3", variant: "1", teacher: "הלל"},
             {course: "אנגלית 4", variant: "2", teacher: "בל"},
-            {course: "כדורשת ה-ו", variant: "", teacher: "איידה"},
+            {course: "מדיטציה ה-ו", variant: "", teacher: "בת-אל"},
             {course: "מרחב ה-ו", variant: "", teacher: "מירית"},
             {course: "קיימות ג-ו", variant: "2", teacher: "רובי"}
         ],
         "ה": [
-            {course: "Life Dance בנות ו-ח", variant: "2", teacher: "תהילה"},
-            {course: "מדיטציה ה-ו", variant: "2", teacher: "אמילי"},
-            {course: "עברית 3", variant: "1", teacher: "גילי"},
-            {course: "עברית 3", variant: "2", teacher: "מירית"}
+            {course: "חנ\"ג ה-ו", variant: "", teacher: "נועם"},
+            {course: "משחקים וחברים ה'", variant: "", teacher: "גילי"},
+            {course: "ספרייה", variant: "", teacher: "ביאן"},
+            {course: "עברית 3", variant: "2", teacher: "מירית"},
+            {course: "Life Dance בנות ו-ח", variant: "2", teacher: "תהילה"}
         ],
         "ו": []
     },
@@ -239,7 +252,8 @@ const scheduleData56 = {
         "א": [
             {course: "הכיתה האולימפית ג-ו", variant: "", teacher: "נחשון"},
             {course: "חשבון 3", variant: "2", teacher: "אסף"},
-            {course: "מיומנויות חשבון ה-ו", variant: "2", teacher: "בראא"},
+            {course: "יוצרים בעץ ה-ו", variant: "", teacher: "בני"},
+            {course: "ספרייה", variant: "", teacher: ""},
             {course: "קומיקס וחברים ו'", variant: "", teacher: "סמדר"}
         ],
         "ב": [
@@ -252,8 +266,8 @@ const scheduleData56 = {
         "ג": [
             {course: "השרדות בטבע ג-ו", variant: "", teacher: "נחשון"},
             {course: "חשבון 3", variant: "1", teacher: "פאטמה"},
-            {course: "מדיטציה ה-ו", variant: "1", teacher: "אמילי"},
             {course: "מרחב ה-ו", variant: "", teacher: "עדי"},
+            {course: "ספרייה", variant: "", teacher: ""},
             {course: "עברית 3", variant: "2", teacher: "מירית"},
             {course: "קומיקס ו-ט", variant: "", teacher: "עומרי"}
         ],
@@ -261,14 +275,16 @@ const scheduleData56 = {
             {course: "אנגלית 3", variant: "1", teacher: "הלל"},
             {course: "אנגלית 4", variant: "2", teacher: "בל"},
             {course: "מרכז חשבון ה-ו", variant: "", teacher: "בראא"},
+            {course: "ספרייה", variant: "", teacher: ""},
             {course: "קיימות ג-ו", variant: "2", teacher: "רובי"}
         ],
         "ה": [
             {course: "בנות מצווה", variant: "", teacher: "מירית"},
             {course: "ג'ודו והגנה עצמית ה-ו", variant: "", teacher: "נחשון"},
+            {course: "ספרייה", variant: "", teacher: "ביאן"},
             {course: "עברית 3", variant: "1", teacher: "גילי"},
-            {course: "קומיקס וחברים ה'", variant: "", teacher: "סמדר"},
-            {course: "קצב הלב", variant: "2", teacher: "אורי"}
+            {course: "ערבית ה-ח", variant: "", teacher: "הייא"},
+            {course: "קומיקס וחברים ה'", variant: "", teacher: "סמדר"}
         ],
         "ו": []
     }
