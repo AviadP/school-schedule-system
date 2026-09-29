@@ -19,7 +19,8 @@ import {
     isSameCourseSelection,
     isSyntheticVariant,
     SYNTHETIC_VARIANT_PREFIX,
-    hasRealSection
+    hasRealSection,
+    getPeriodTime
 } from '../js/utils.js';
 
 describe('Utility Functions', () => {
@@ -143,6 +144,19 @@ describe('Utility Functions', () => {
             expect(isValidTimeSlot('08:30_09:20')).toBe(false);
             expect(isValidTimeSlot('invalid')).toBe(false);
             expect(isValidTimeSlot('')).toBe(false);
+        });
+    });
+
+    describe('getPeriodTime()', () => {
+        test('should return the clock time of a schedule hour', () => {
+            expect(getPeriodTime('1')).toBe('08:30-09:10');
+            expect(getPeriodTime('0')).toBe('08:15-08:25');
+        });
+
+        test('should return empty string for hours without a published time', () => {
+            expect(getPeriodTime('10')).toBe('');
+            expect(getPeriodTime('08:30-09:20')).toBe('');
+            expect(getPeriodTime(undefined)).toBe('');
         });
     });
 

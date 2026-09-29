@@ -1,6 +1,6 @@
 // Excel export functionality
 import { CONFIG } from './config.js';
-import { escapeCsvCell, formatCourseDisplay } from './utils.js';
+import { escapeCsvCell, formatCourseDisplay, getPeriodTime } from './utils.js';
 
 // Export schedule to Excel/CSV format
 export function exportToExcel(selectedCourses, rawScheduleData) {
@@ -12,7 +12,8 @@ export function exportToExcel(selectedCourses, rawScheduleData) {
     
     // Data rows
     Object.keys(rawScheduleData).forEach(time => {
-        const row = [time];
+        const periodTime = getPeriodTime(time);
+        const row = [periodTime ? `${time} (${periodTime})` : time];
         
         CONFIG.DAYS.forEach(day => {
             const key = `${time}_${day}`;

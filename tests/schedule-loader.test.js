@@ -36,11 +36,13 @@ describe('Schedule Loader Functions', () => {
             expect(noParamSchedule).toEqual(defaultSchedule);
         });
 
-        test('should contain time slots matching CONFIG.TIME_SLOTS', () => {
-            const schedule = getScheduleData('3-4');
-            
-            CONFIG.TIME_SLOTS.forEach(timeSlot => {
-                expect(schedule[timeSlot]).toBeDefined();
+        test('should give every regular period (1-6) a clock time in every grade', () => {
+            getAvailableGradeLevels().forEach(gradeLevel => {
+                const schedule = getScheduleData(gradeLevel);
+                ['1', '2', '3', '4', '5', '6'].forEach(hour => {
+                    expect(schedule[hour]).toBeDefined();
+                    expect(CONFIG.PERIOD_TIMES[hour]).toBeDefined();
+                });
             });
         });
 

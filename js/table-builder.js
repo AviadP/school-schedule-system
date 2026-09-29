@@ -1,7 +1,7 @@
 // Table building and management functionality
 import { CONFIG } from './config.js';
 import { getDayName, createCourseValue, calculateStats, escapeHtml, isSameCourseSelection,
-         formatCourseDisplay, SYNTHETIC_VARIANT_PREFIX, hasRealSection } from './utils.js';
+         formatCourseDisplay, SYNTHETIC_VARIANT_PREFIX, hasRealSection, getPeriodTime } from './utils.js';
 
 // Global variables for table state
 let selectedCourses = {};
@@ -52,7 +52,9 @@ export function createScheduleTable(rawScheduleData, gradeLevel) {
     
     Object.keys(rawScheduleData).forEach(time => {
         html += `<tr>`;
-        html += `<td class="time-cell">${time}</td>`;
+        const periodTime = getPeriodTime(time);
+        html += `<td class="time-cell">${escapeHtml(time)}` +
+            (periodTime ? `<span class="period-time">${periodTime}</span>` : '') + `</td>`;
         
         CONFIG.DAYS.forEach(day => {
             const options = rawScheduleData[time][day];
